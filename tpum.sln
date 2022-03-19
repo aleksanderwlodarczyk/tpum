@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpum", "tpum.csproj", "{132BC6BB-A991-41C7-B98E-F96A628A959F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tpum", "tpum\tpum.csproj", "{132BC6BB-A991-41C7-B98E-F96A628A959F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTests", "UTests\UTests.csproj", "{41A091DD-92D7-44B6-9917-0FC9CA43A528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{132BC6BB-A991-41C7-B98E-F96A628A959F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{132BC6BB-A991-41C7-B98E-F96A628A959F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{132BC6BB-A991-41C7-B98E-F96A628A959F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A091DD-92D7-44B6-9917-0FC9CA43A528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A091DD-92D7-44B6-9917-0FC9CA43A528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A091DD-92D7-44B6-9917-0FC9CA43A528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A091DD-92D7-44B6-9917-0FC9CA43A528}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
