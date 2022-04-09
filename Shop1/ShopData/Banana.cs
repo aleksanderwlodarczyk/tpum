@@ -8,7 +8,7 @@ namespace ShopData
 {
     internal class Banana : Fruit
     {
-        public Banana(string name, float price, CountryOfOrigin origin, BananaType type) : base(name, price, origin)
+        public Banana(string name, float price, CountryOfOrigin origin, BananaType type) : base("Banana", price, origin)
         {
             Type = type;
         }

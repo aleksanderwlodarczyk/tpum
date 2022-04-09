@@ -8,7 +8,7 @@ namespace ShopData
 {
     internal class Apple : Fruit
     {
-        public Apple(string name, float price, AppleType type) : base(name, price)
+        public Apple(string name, float price, CountryOfOrigin origin, AppleType type) : base("Apple", price, origin)
         {
             Type = type;
         }

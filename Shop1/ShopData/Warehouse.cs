@@ -8,6 +8,10 @@ namespace ShopData
 {
     internal class Warehouse
     {
-        public List<Fruit> Stock { get; private set; } = new List<Fruit>();
+        public Warehouse()
+        {
+            Stock = new List<Fruit>();
+        }
+        public List<Fruit> Stock { get; private set; }
     }
 }

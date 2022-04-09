@@ -16,9 +16,9 @@ namespace ShopData
             ID = Guid.NewGuid();
         }
 
-        public virtual string Name { get; }
-        public virtual float Price { get; }
-        public virtual Guid ID { get; }
+        public  string Name { get; }
+        public  float Price { get; set; }
+        public  Guid ID { get; }
         public CountryOfOrigin Origin { get; }
     }
 }
