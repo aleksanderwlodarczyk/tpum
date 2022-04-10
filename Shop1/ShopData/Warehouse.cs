@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace ShopData
 {
-    public class Warehouse : IWarehouse
+    internal class Warehouse : IWarehouse
     {
-        private Warehouse()
+        public Warehouse()
         {
             Stock = new List<Fruit>();
-        }
-
-        public static Warehouse CreateInstance()
-        {
-            return new Warehouse();
         }
 
         public List<Fruit> Stock { get; private set; }
@@ -23,10 +18,20 @@ namespace ShopData
         {
             fruits.ForEach(x => Stock.Remove(x));
         }
-    }
 
-    public interface IWarehouse
-    {
-        public void RemoveFruits(List<Fruit> fruits);
+        public void AddFruits(List<Fruit> fruits)
+        {
+            Stock.AddRange(fruits);
+        }
+
+        public List<Fruit> GetFruitsOfType(string name)
+        {
+            return Stock.FindAll(x => x.Name == name);
+        }
+
+        public List<Fruit> GetFruitsOfOrigin(CountryOfOrigin origin)
+        {
+            return Stock.FindAll(x => x.Origin == origin);
+        }
     }
 }

@@ -7,7 +7,7 @@ using ShopData;
 
 namespace ShopLogic
 {
-    public class Shop
+    internal class Shop : IShop
     {
         private IWarehouse warehouse;
         public Shop(IWarehouse warehouse)
@@ -15,15 +15,9 @@ namespace ShopLogic
             this.warehouse = warehouse;
         }
 
-        public void Buy(List<Fruit> fruits)
+        public bool Sell(List<Fruit> fruits)
         {
-
+            return false;
         }
     }
-
-    public class Factory
-    {
-        public Shop GetShop() => new Shop(Warehouse.CreateInstance());
-    }
-
 }
