@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+      <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <StartupObject>TP.ConcurrentProgramming.PresentationView.App</StartupObject>
@@ -11,7 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="apple.png" />
+    <None Remove="banana.png" />
+    <None Remove="pear.png" />
+    <None Remove="raspberry.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PresentationViewModel\PresentationViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="apple.png" />
+    <Resource Include="banana.png" />
+    <Resource Include="pear.png" />
+    <Resource Include="raspberry.png" />
   </ItemGroup>
 
 </Project>

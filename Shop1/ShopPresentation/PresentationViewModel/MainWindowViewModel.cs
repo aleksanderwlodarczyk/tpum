@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using TP.ConcurrentProgramming.PresentationModel;
 using TP.ConcurrentProgramming.PresentationViewModel.MVVMLight;
+using System.Collections.ObjectModel;
+using ShopLogic;
 
 namespace TP.ConcurrentProgramming.PresentationViewModel
 {
@@ -24,9 +26,15 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             ColorString = ModelLayer.ColorString;
             MainViewVisibility = ModelLayer.MainViewVisibility;
             BasketViewVisibility = ModelLayer.BasketViewVisibility;
+            fruits = new ObservableCollection<FruitDTO>();
+            foreach(FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
+            {
+                Fruits.Add(fruit);
+            }
             ButtomClick = new RelayCommand(() => ClickHandler());
             BasketButtonClick = new RelayCommand(() => BasketButtonClickHandler());
             MainPageButtonClick = new RelayCommand(() => MainPagetButtonClickHandler());
+
         }
 
         public string ColorString
@@ -88,6 +96,20 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
         }
 
+        public ObservableCollection<FruitDTO> Fruits
+        {
+            get
+            {
+                return fruits;
+            }
+            set
+            {
+                if (value.Equals(fruits))
+                    return;
+                RaisePropertyChanged("Fruits");
+            }
+        }
+
         public int Radious
         {
             get
@@ -106,8 +128,6 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         public ICommand ButtomClick { get; set; }
         public ICommand BasketButtonClick { get; set; }
         public ICommand MainPageButtonClick { get; set; }
-        public object BasketView { get; set; }
-        public object MainView { get; set; }
 
         private void ClickHandler()
         {
@@ -134,6 +154,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         #region private
 
         private IList<object> b_CirclesCollection;
+        private ObservableCollection<FruitDTO> fruits;
         private int b_Radious;
         private string b_colorString;
         private string b_mainViewVisibility;
