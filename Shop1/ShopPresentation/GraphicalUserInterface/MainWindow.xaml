@@ -12,7 +12,6 @@
     <Grid>
         <Canvas Width="900" Height="600" x:Name="MainView" Visibility="{Binding MainViewVisibility}">
             <StackPanel Orientation="Vertical">
-                <!-- Draws an oval with a blue interior. -->
                 <StackPanel Orientation="Horizontal" Width="900" Height="100">
                     <Button Content="Jabłka" MinHeight="100" MinWidth="150" Margin="5 0" Command= "{Binding ApplesButtonClick}"/>
                     <Button Content="Banany" MinHeight="100" MinWidth="150" Margin="5 0" Command= "{Binding BananasButtonClick}"/>

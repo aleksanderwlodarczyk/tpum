@@ -34,7 +34,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             ButtomClick = new RelayCommand(() => ClickHandler());
             BasketButtonClick = new RelayCommand(() => BasketButtonClickHandler());
             MainPageButtonClick = new RelayCommand(() => MainPagetButtonClickHandler());
-
+            ApplesButtonClick = new RelayCommand(() => ApplesButtonClickHandler());
+            BananasButtonClick = new RelayCommand(() => BananasButtonClickHandler());
+            PearsButtonClick = new RelayCommand(() => PearsButtonClickHandler());
+            RaspberriesButtonClick = new RelayCommand(() => RaspberriesButtonClickHandler());
         }
 
         public string ColorString
@@ -128,6 +131,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         public ICommand ButtomClick { get; set; }
         public ICommand BasketButtonClick { get; set; }
         public ICommand MainPageButtonClick { get; set; }
+        public ICommand ApplesButtonClick { get; set; }
+        public ICommand BananasButtonClick { get; set; }
+        public ICommand RaspberriesButtonClick { get; set; }
+        public ICommand PearsButtonClick { get; set; }
 
         private void ClickHandler()
         {
@@ -143,6 +150,45 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             MainViewVisibility = "Hidden";
         }
 
+        private void ApplesButtonClickHandler()
+        {
+            Fruits.Clear();
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
+            {
+                if(fruit.FruitType.ToLower().Equals("apple"))
+                    Fruits.Add(fruit);
+            }
+        }
+
+        private void BananasButtonClickHandler()
+        {
+            Fruits.Clear();
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
+            {
+                if (fruit.FruitType.ToLower().Equals("banana"))
+                    Fruits.Add(fruit);
+            }
+        }
+
+        private void RaspberriesButtonClickHandler()
+        {
+            Fruits.Clear();
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
+            {
+                if (fruit.FruitType.ToLower().Equals("raspberry"))
+                    Fruits.Add(fruit);
+            }
+        }
+
+        private void PearsButtonClickHandler()
+        {
+            Fruits.Clear();
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
+            {
+                if (fruit.FruitType.ToLower().Equals("pear"))
+                    Fruits.Add(fruit);
+            }
+        }
         private void MainPagetButtonClickHandler()
         {
             BasketViewVisibility = "Hidden";
