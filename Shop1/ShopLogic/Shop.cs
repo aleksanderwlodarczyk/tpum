@@ -10,14 +10,39 @@ namespace ShopLogic
     internal class Shop : IShop
     {
         private IWarehouse warehouse;
+        private IBasket basket;
         public Shop(IWarehouse warehouse)
         {
             this.warehouse = warehouse;
+            basket = new Basket();
         }
 
-        public bool Sell(List<Fruit> fruits)
+        public bool Sell(List<FruitDTO> fruitDTOs)
         {
-            return false;
+            List<Guid> guids = new List<Guid>();
+
+            foreach (FruitDTO fruitDTO in fruitDTOs)
+            {
+                guids.Add(fruitDTO.ID);
+            }
+
+            List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
+
+            warehouse.RemoveFruits(fruits);
+
+            return true;
+        }
+
+        public List<FruitDTO> GetAvailableFruits()
+        {
+            List<FruitDTO> result = new List<FruitDTO>();
+
+            foreach (IFruit fruit in warehouse.Stock)
+            {
+                result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
+            }
+
+            return result;
         }
     }
 }

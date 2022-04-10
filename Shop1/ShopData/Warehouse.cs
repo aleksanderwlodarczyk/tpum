@@ -10,28 +10,41 @@ namespace ShopData
     {
         public Warehouse()
         {
-            Stock = new List<Fruit>();
+            Stock = new List<IFruit>();
         }
+        public List<IFruit> Stock { get; }
 
-        public List<Fruit> Stock { get; private set; }
-        public void RemoveFruits(List<Fruit> fruits)
+        public void RemoveFruits(List<IFruit> fruits)
         {
             fruits.ForEach(x => Stock.Remove(x));
         }
 
-        public void AddFruits(List<Fruit> fruits)
+        public void AddFruits(List<IFruit> fruits)
         {
             Stock.AddRange(fruits);
         }
 
-        public List<Fruit> GetFruitsOfType(string name)
+        public List<IFruit> GetFruitsOfType(string name)
         {
             return Stock.FindAll(x => x.Name == name);
         }
 
-        public List<Fruit> GetFruitsOfOrigin(CountryOfOrigin origin)
+        public List<IFruit> GetFruitsOfOrigin(CountryOfOrigin origin)
         {
             return Stock.FindAll(x => x.Origin == origin);
+        }
+
+        public List<IFruit> GetFruitsWithIDs(List<Guid> IDs)
+        {
+            List<IFruit> fruits = new List<IFruit>();
+            foreach (Guid guid in IDs)
+            {
+                List<IFruit> temp = Stock.FindAll(x => x.ID == guid);
+                if (temp.Count > 0)
+                    fruits.AddRange(temp);
+            }
+
+            return fruits;
         }
     }
 }

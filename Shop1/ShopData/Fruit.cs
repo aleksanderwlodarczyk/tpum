@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace ShopData
 {
-    public abstract class Fruit
+    internal class Fruit : IFruit
     {
-        public Fruit(string name, float price, CountryOfOrigin origin)
+        public Fruit(string name, float price, CountryOfOrigin origin, FruitType fruitType)
         {
             Name = name;
             Price = price;
             Origin = origin;
             ID = Guid.NewGuid();
+            FruitType = fruitType;
         }
 
-        public  string Name { get; }
-        public  float Price { get; set; }
-        public  Guid ID { get; }
+        public string Name { get; }
+        public float Price { get; set; }
+        public Guid ID { get; }
         public CountryOfOrigin Origin { get; }
+        public FruitType FruitType { get; }
     }
 }
