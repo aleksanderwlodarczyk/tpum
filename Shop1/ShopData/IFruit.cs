@@ -9,6 +9,5 @@ namespace ShopData
         public Guid ID { get; }
         public CountryOfOrigin Origin { get; }
         public FruitType FruitType { get; }
-
     }
 }
