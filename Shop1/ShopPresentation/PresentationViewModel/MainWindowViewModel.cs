@@ -22,8 +22,11 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             ModelLayer = modelAbstractApi;
             Radious = ModelLayer.Radius;
             ColorString = ModelLayer.ColorString;
+            MainViewVisibility = ModelLayer.MainViewVisibility;
+            BasketViewVisibility = ModelLayer.BasketViewVisibility;
             ButtomClick = new RelayCommand(() => ClickHandler());
             BasketButtonClick = new RelayCommand(() => BasketButtonClickHandler());
+            MainPageButtonClick = new RelayCommand(() => MainPagetButtonClickHandler());
         }
 
         public string ColorString
@@ -38,6 +41,36 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                     return;
                 b_colorString = value;
                 RaisePropertyChanged("ColorString");
+            }
+        }
+
+        public string MainViewVisibility
+        {
+            get
+            {
+                return b_mainViewVisibility;
+            }
+            set
+            {
+                if (value.Equals(b_mainViewVisibility))
+                    return;
+                b_mainViewVisibility = value;
+                RaisePropertyChanged("MainViewVisibility");
+            }
+        }
+
+        public string BasketViewVisibility
+        {
+            get
+            {
+                return b_basketViewVisibility;
+            }
+            set
+            {
+                if (value.Equals(b_basketViewVisibility))
+                    return;
+                b_basketViewVisibility = value;
+                RaisePropertyChanged("BasketViewVisibility");
             }
         }
 
@@ -72,7 +105,9 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         public ICommand ButtomClick { get; set; }
         public ICommand BasketButtonClick { get; set; }
-        public Window BasketWindow { get; set; }
+        public ICommand MainPageButtonClick { get; set; }
+        public object BasketView { get; set; }
+        public object MainView { get; set; }
 
         private void ClickHandler()
         {
@@ -84,7 +119,14 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void BasketButtonClickHandler()
         {
-            
+            BasketViewVisibility = "Visible";
+            MainViewVisibility = "Hidden";
+        }
+
+        private void MainPagetButtonClickHandler()
+        {
+            BasketViewVisibility = "Hidden";
+            MainViewVisibility = "Visible";
         }
 
         #endregion public API
@@ -94,6 +136,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private IList<object> b_CirclesCollection;
         private int b_Radious;
         private string b_colorString;
+        private string b_mainViewVisibility;
+        private string b_basketViewVisibility;
         private ModelAbstractApi ModelLayer = ModelAbstractApi.CreateApi();
 
         #endregion private

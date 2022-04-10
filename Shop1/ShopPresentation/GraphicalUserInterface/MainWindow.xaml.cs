@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using TP.ConcurrentProgramming.PresentationViewModel;
 
@@ -14,7 +15,6 @@ namespace TP.ConcurrentProgramming.PresentationView
         {
             InitializeComponent();
             MainWindowViewModel _vm = (MainWindowViewModel)DataContext;
-            _vm.BasketWindow = new Lazy<Window>(() => new BasketWindow());
         }
     }
 }
