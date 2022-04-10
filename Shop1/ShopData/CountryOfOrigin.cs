@@ -1,6 +1,6 @@
 ﻿namespace ShopData
 {
-    internal enum CountryOfOrigin
+    public enum CountryOfOrigin
     {
         Poland,
         England,
