@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShopData
 {
-    internal class Fruit : IFruit
+    public class Fruit : IFruit
     {
         public Fruit(string name, float price, CountryOfOrigin origin, FruitType fruitType)
         {
