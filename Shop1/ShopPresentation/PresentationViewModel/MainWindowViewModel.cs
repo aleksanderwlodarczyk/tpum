@@ -47,7 +47,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             BuyButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BuyButtonClickHandler());
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
-            timer.Interval = 2;
+            timer.Interval = 10000;
+            timer.Enabled = true;
             timer.Elapsed += Timer_Elapsed;
         }
 
@@ -58,8 +59,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Fruits.Clear();
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            List<FruitDTO> fruitsInShop = ModelLayer.WarehousePresentation.GetFruits();
+            Fruits = new ObservableCollection<FruitDTO>();
+
+            foreach (FruitDTO fruit in fruitsInShop)
             {
                 Fruits.Add(fruit);
             }

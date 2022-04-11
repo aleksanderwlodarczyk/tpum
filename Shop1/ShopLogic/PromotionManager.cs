@@ -8,7 +8,7 @@ namespace ShopLogic
     {
         public PromotionManager(IWarehouse warehouse)
         {
-            PromotionTimer = new System.Timers.Timer(2000);
+            PromotionTimer = new System.Timers.Timer(10000);
             PromotionTimer.Elapsed += GetNewPromotion;
             PromotionTimer.AutoReset = true;
             PromotionTimer.Enabled = true;
