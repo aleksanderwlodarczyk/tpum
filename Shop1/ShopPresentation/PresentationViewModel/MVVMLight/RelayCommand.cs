@@ -26,7 +26,6 @@ namespace TP.ConcurrentProgramming.PresentationViewModel.MVVMLight
       this.m_Execute = execute ?? throw new ArgumentNullException(nameof(execute));
       this.m_CanExecute = canExecute;
     }
-
     #endregion constructors
 
     #region ICommand

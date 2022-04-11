@@ -7,6 +7,8 @@ using TP.ConcurrentProgramming.PresentationModel;
 using TP.ConcurrentProgramming.PresentationViewModel.MVVMLight;
 using System.Collections.ObjectModel;
 using ShopLogic;
+using Microsoft.Toolkit.Mvvm;
+using GalaSoft.MvvmLight.Command;
 
 namespace TP.ConcurrentProgramming.PresentationViewModel
 {
@@ -31,13 +33,15 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             {
                 Fruits.Add(fruit);
             }
-            ButtomClick = new RelayCommand(() => ClickHandler());
-            BasketButtonClick = new RelayCommand(() => BasketButtonClickHandler());
-            MainPageButtonClick = new RelayCommand(() => MainPagetButtonClickHandler());
-            ApplesButtonClick = new RelayCommand(() => ApplesButtonClickHandler());
-            BananasButtonClick = new RelayCommand(() => BananasButtonClickHandler());
-            PearsButtonClick = new RelayCommand(() => PearsButtonClickHandler());
-            RaspberriesButtonClick = new RelayCommand(() => RaspberriesButtonClickHandler());
+            ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
+            BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
+            MainPageButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => MainPagetButtonClickHandler());
+            ApplesButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ApplesButtonClickHandler());
+            BananasButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BananasButtonClickHandler());
+            PearsButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => PearsButtonClickHandler());
+            RaspberriesButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => RaspberriesButtonClickHandler());
+
+            FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
         }
 
         public string ColorString
@@ -82,6 +86,21 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                     return;
                 b_basketViewVisibility = value;
                 RaisePropertyChanged("BasketViewVisibility");
+            }
+        }
+
+        public Basket Basket
+        {
+            get
+            {
+                return basket;
+            }
+            set
+            {
+                if (value.Equals(basket))
+                    return;
+                basket = value;
+                RaisePropertyChanged("Basket");
             }
         }
 
@@ -136,6 +155,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         public ICommand RaspberriesButtonClick { get; set; }
         public ICommand PearsButtonClick { get; set; }
 
+        public ICommand FruitButtonClick { get; set; }
+
         private void ClickHandler()
         {
             // do something usefull
@@ -148,6 +169,15 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         {
             BasketViewVisibility = "Visible";
             MainViewVisibility = "Hidden";
+        }
+
+        private void FruitButtonClickHandler(Guid id)
+        {
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
+            {
+                if (fruit.ID.Equals(id))
+                    Basket.Add(fruit);
+            }
         }
 
         private void ApplesButtonClickHandler()
@@ -200,6 +230,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         #region private
 
         private IList<object> b_CirclesCollection;
+        private Basket basket;
         private ObservableCollection<FruitDTO> fruits;
         private int b_Radious;
         private string b_colorString;
