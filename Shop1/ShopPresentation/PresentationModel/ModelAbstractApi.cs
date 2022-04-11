@@ -1,6 +1,7 @@
 ﻿using ShopLogic;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Timers;
 
 namespace TP.ConcurrentProgramming.PresentationModel
 {
@@ -12,6 +13,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public abstract string BasketViewVisibility { get; } 
         public abstract WarehousePresentation WarehousePresentation { get; }
         public abstract Basket Basket { get; }
+        public abstract Timer Timer { get; }
 
         public static ModelAbstractApi CreateApi()
         {
@@ -41,6 +43,8 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public override Basket Basket => new Basket(new ObservableCollection<FruitDTO>(), logicLayer.Shop);
 
         public override WarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
+
+        public override Timer Timer => new Timer();
 
         private LogicLayer logicLayer;
     }

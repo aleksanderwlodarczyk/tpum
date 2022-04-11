@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using ShopLogic;
 using Microsoft.Toolkit.Mvvm;
 using GalaSoft.MvvmLight.Command;
+using System.Timers;
 
 namespace TP.ConcurrentProgramming.PresentationViewModel
 {
@@ -34,6 +35,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                 Fruits.Add(fruit);
             }
             basket = ModelLayer.Basket;
+            timer = ModelLayer.Timer;
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
             MainPageButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => MainPagetButtonClickHandler());
@@ -45,6 +47,22 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             BuyButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BuyButtonClickHandler());
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
+            timer.Interval = 2;
+            timer.Elapsed += Timer_Elapsed;
+        }
+
+        ~MainWindowViewModel()
+        {
+            timer.Elapsed -= Timer_Elapsed;
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Fruits.Clear();
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            {
+                Fruits.Add(fruit);
+            }
         }
 
         public string ColorString
@@ -267,6 +285,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private Basket basket;
         private float basketSum;
         private ObservableCollection<FruitDTO> fruits;
+        private Timer timer;
         private int b_Radious;
         private string b_colorString;
         private string b_mainViewVisibility;
