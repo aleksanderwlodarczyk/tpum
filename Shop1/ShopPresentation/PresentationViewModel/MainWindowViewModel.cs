@@ -187,7 +187,13 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void BuyButtonClickHandler()
         {
-            
+            Basket.Buy();
+            BasketSum = Basket.Sum();
+            Fruits.Clear();
+            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            {
+                Fruits.Add(fruit);
+            }
         }
 
         private void BasketButtonClickHandler()

@@ -38,7 +38,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public override string BasketViewVisibility => "Hidden";
 
-        public override Basket Basket => new Basket(new ObservableCollection<FruitDTO>());
+        public override Basket Basket => new Basket(new ObservableCollection<FruitDTO>(), logicLayer.Shop);
 
         public override WarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
 

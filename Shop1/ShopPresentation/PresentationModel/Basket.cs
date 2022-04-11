@@ -11,10 +11,12 @@ namespace TP.ConcurrentProgramming.PresentationModel
     public class Basket
     {
         public ObservableCollection<FruitDTO> Fruits { get; set; }
+        private IShop Shop { get; set; }
 
-        public Basket(ObservableCollection<FruitDTO> fruits)
+        public Basket(ObservableCollection<FruitDTO> fruits, IShop shop)
         {
             Fruits = fruits;
+            Shop = shop;
         }
 
         public void Add(FruitDTO fruit)
@@ -29,6 +31,15 @@ namespace TP.ConcurrentProgramming.PresentationModel
             {
                 res += fruit.Price;
             }
+
+            return res;
+        }
+
+        public bool Buy()
+        {
+            bool res = Shop.Sell(Fruits.ToList());
+            if (res)
+                Fruits.Clear();
 
             return res;
         }
