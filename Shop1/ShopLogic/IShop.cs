@@ -6,6 +6,6 @@ namespace ShopLogic
     public interface IShop
     {
         public bool Sell(List<FruitDTO> fruits);
-        public List<FruitDTO> GetAvailableFruits();
+        public List<FruitDTO> GetAvailableFruits(bool withPromotion = true);
     }
 }

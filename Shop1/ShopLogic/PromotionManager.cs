@@ -14,15 +14,17 @@ namespace ShopLogic
             PromotionTimer.Enabled = true;
             Warehouse = warehouse;
             Rand = new Random();
+            Promotion = 1f;
+            FruitOnPromotionID = Guid.Empty;
         }
-        private Guid FruitOnPromotionID { get;  set; }
+        private Guid FruitOnPromotionID { get; set; }
         private Timer PromotionTimer { get; }
-        private float Promotion { get;  set; }
+        private float Promotion { get; set; }
         private IWarehouse Warehouse { get; set; }
         private Random Rand { get; set; }
         private void GetNewPromotion(Object source, ElapsedEventArgs e)
         {
-            Promotion = ((float)Rand.NextDouble() /4f) + 0.75f;
+            Promotion = ((float)Rand.NextDouble() / 4f) + 0.75f;
             FruitOnPromotionID = Warehouse.Stock[Rand.Next(0, Warehouse.Stock.Count)].ID;
         }
 

@@ -10,9 +10,11 @@ namespace ShopLogic
     internal class Shop : IShop
     {
         private IWarehouse warehouse;
+        private IPromotionManager promotionManager;
         public Shop(IWarehouse warehouse)
         {
             this.warehouse = warehouse;
+            promotionManager = new PromotionManager(warehouse);
         }
 
         public bool Sell(List<FruitDTO> fruitDTOs)
@@ -31,13 +33,22 @@ namespace ShopLogic
             return true;
         }
 
-        public List<FruitDTO> GetAvailableFruits()
+        public List<FruitDTO> GetAvailableFruits(bool withPromotion = true)
         {
+            Tuple<Guid, float> promotion = new Tuple<Guid, float>(Guid.Empty, 1f);
+            if (withPromotion)
+            {
+                promotion = promotionManager.GetCurrentPromotion();
+            }
+
             List<FruitDTO> result = new List<FruitDTO>();
 
             foreach (IFruit fruit in warehouse.Stock)
             {
-                result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
+                float price = fruit.Price;
+                if (fruit.ID.Equals(promotion.Item1))
+                    price *= promotion.Item2;
+                result.Add(new FruitDTO { Price = price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
             }
 
             return result;
