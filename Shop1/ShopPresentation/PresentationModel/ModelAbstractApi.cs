@@ -1,5 +1,6 @@
 ﻿using ShopLogic;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace TP.ConcurrentProgramming.PresentationModel
 {
@@ -11,7 +12,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public abstract string BasketViewVisibility { get; } 
         public abstract WarehousePresentation WarehousePresentation { get; }
         public abstract Basket Basket { get; }
-        public abstract LogicLayer LogicLayer { get; }
 
         public static ModelAbstractApi CreateApi()
         {
@@ -21,6 +21,16 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
     internal class ModelApi : ModelAbstractApi
     {
+        public ModelApi() : this(LogicLayer.Create())
+        {
+
+        }
+
+        public ModelApi(LogicLayer logicLayer)
+        {
+            this.logicLayer = logicLayer;
+        }
+
         public override int Radius => 100;
         public override string ColorString => "White";
 
@@ -28,11 +38,10 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public override string BasketViewVisibility => "Hidden";
 
-        public override Basket Basket => new Basket(new List<FruitDTO>());
+        public override Basket Basket => new Basket(new ObservableCollection<FruitDTO>(), logicLayer.Shop);
 
-        public override WarehousePresentation WarehousePresentation => new WarehousePresentation(LogicLayer.Shop);
+        public override WarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
 
-        public override LogicLayer LogicLayer => LogicLayer.Create();
-
+        private LogicLayer logicLayer;
     }
 }
