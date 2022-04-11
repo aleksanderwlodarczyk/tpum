@@ -6,7 +6,7 @@ namespace ShopLogic
     {
         public IShop Shop { get; private set; }
 
-        private LogicLayer(DataLayer data)
+        public LogicLayer(DataLayer data)
         {
             Shop = new Shop(data.Warehouse);
         }
