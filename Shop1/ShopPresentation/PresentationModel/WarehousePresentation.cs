@@ -7,11 +7,18 @@ namespace TP.ConcurrentProgramming.PresentationModel
 {
     public class WarehousePresentation
     {
-        public IShop Shop { get; set; }
+        private IShop Shop { get; set; }
 
         public WarehousePresentation(IShop shop)
         {
             Shop = shop;
         }
+
+        public List<FruitDTO> GetFruits()
+        {
+            return Shop.GetAvailableFruits();
+        }
+
+        
     }
 }

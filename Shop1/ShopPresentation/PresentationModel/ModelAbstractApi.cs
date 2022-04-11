@@ -12,7 +12,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public abstract string BasketViewVisibility { get; } 
         public abstract WarehousePresentation WarehousePresentation { get; }
         public abstract Basket Basket { get; }
-        public abstract LogicLayer LogicLayer { get; }
 
         public static ModelAbstractApi CreateApi()
         {
@@ -41,9 +40,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public override Basket Basket => new Basket(new ObservableCollection<FruitDTO>());
 
-        public override WarehousePresentation WarehousePresentation => new WarehousePresentation(LogicLayer.Shop);
-
-        public override LogicLayer LogicLayer => logicLayer;
+        public override WarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
 
         private LogicLayer logicLayer;
     }
