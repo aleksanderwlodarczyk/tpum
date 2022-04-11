@@ -33,6 +33,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             {
                 Fruits.Add(fruit);
             }
+            basket = new Basket(new ObservableCollection<FruitDTO>());
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
             MainPageButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => MainPagetButtonClickHandler());
@@ -89,6 +90,21 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
         }
 
+        public float BasketSum
+        {
+            get
+            {
+                return basketSum;
+            }
+            set
+            {
+                if (value.Equals(basketSum))
+                    return;
+                basketSum = value;
+                RaisePropertyChanged("BasketSum");
+            }
+        }
+
         public Basket Basket
         {
             get
@@ -128,6 +144,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             {
                 if (value.Equals(fruits))
                     return;
+                fruits = value;
                 RaisePropertyChanged("Fruits");
             }
         }
@@ -176,7 +193,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.Shop.GetAvailableFruits())
             {
                 if (fruit.ID.Equals(id))
+                {
                     Basket.Add(fruit);
+                    BasketSum = Basket.Sum();
+                }
             }
         }
 
@@ -231,12 +251,13 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private IList<object> b_CirclesCollection;
         private Basket basket;
+        private float basketSum;
         private ObservableCollection<FruitDTO> fruits;
         private int b_Radious;
         private string b_colorString;
         private string b_mainViewVisibility;
         private string b_basketViewVisibility;
-        private ModelAbstractApi ModelLayer = ModelAbstractApi.CreateApi();
+        private ModelAbstractApi ModelLayer;
 
         #endregion private
 
