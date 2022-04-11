@@ -10,7 +10,7 @@ namespace ShopData
     {
         public IWarehouse Warehouse { get; private set; }
 
-        private DataLayer()
+        public DataLayer()
         {
             Warehouse = new Warehouse();
         }

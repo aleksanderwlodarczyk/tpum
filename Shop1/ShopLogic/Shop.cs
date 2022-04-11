@@ -10,11 +10,9 @@ namespace ShopLogic
     internal class Shop : IShop
     {
         private IWarehouse warehouse;
-        private IBasket basket;
         public Shop(IWarehouse warehouse)
         {
             this.warehouse = warehouse;
-            basket = new Basket();
         }
 
         public bool Sell(List<FruitDTO> fruitDTOs)

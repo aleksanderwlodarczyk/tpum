@@ -34,9 +34,9 @@ namespace ShopData
             Stock.AddRange(fruits);
         }
 
-        public List<IFruit> GetFruitsOfType(string name)
+        public List<IFruit> GetFruitsOfType(FruitType type)
         {
-            return Stock.FindAll(x => x.Name == name);
+            return Stock.FindAll(x => x.FruitType == type);
         }
 
         public List<IFruit> GetFruitsOfOrigin(CountryOfOrigin origin)

@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopData", "ShopData\ShopData.csproj", "{E3AC75D5-0FE3-43B7-8746-BACF185C0C96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopData", "ShopData\ShopData.csproj", "{E3AC75D5-0FE3-43B7-8746-BACF185C0C96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopLogic", "ShopLogic\ShopLogic.csproj", "{9D4B75A0-86B3-415E-8A0B-8ACF27144B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopLogic", "ShopLogic\ShopLogic.csproj", "{9D4B75A0-86B3-415E-8A0B-8ACF27144B4C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationView", "ShopPresentation\GraphicalUserInterface\PresentationView.csproj", "{FD122D1A-7D2A-4B26-9A9A-B1DDDD0A8F3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationViewModel", "ShopPresentation\PresentationViewModel\PresentationViewModel.csproj", "{93D1C1A3-0336-40B3-B835-C72F8E43CBEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationModel", "ShopPresentation\PresentationModel\PresentationModel.csproj", "{2300F619-3E09-415E-BA44-4BC573BB64ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopDataTest", "ShopDataTest\ShopDataTest.csproj", "{B42F6867-3106-4CE5-B8B7-4D44F09FC9B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopLogicTest", "ShopLogicTest\ShopLogicTest.csproj", "{2CC2C4FC-2945-4B7D-82CA-FB9A33B007B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{2300F619-3E09-415E-BA44-4BC573BB64ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2300F619-3E09-415E-BA44-4BC573BB64ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2300F619-3E09-415E-BA44-4BC573BB64ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42F6867-3106-4CE5-B8B7-4D44F09FC9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42F6867-3106-4CE5-B8B7-4D44F09FC9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42F6867-3106-4CE5-B8B7-4D44F09FC9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42F6867-3106-4CE5-B8B7-4D44F09FC9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CC2C4FC-2945-4B7D-82CA-FB9A33B007B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CC2C4FC-2945-4B7D-82CA-FB9A33B007B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CC2C4FC-2945-4B7D-82CA-FB9A33B007B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CC2C4FC-2945-4B7D-82CA-FB9A33B007B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
