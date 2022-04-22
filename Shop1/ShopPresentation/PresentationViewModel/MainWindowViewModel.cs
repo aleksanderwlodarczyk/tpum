@@ -6,6 +6,7 @@ using System.Windows.Input;
 using TP.ConcurrentProgramming.PresentationModel;
 using TP.ConcurrentProgramming.PresentationViewModel.MVVMLight;
 using System.Collections.ObjectModel;
+using System.Linq;
 using ShopLogic;
 using Microsoft.Toolkit.Mvvm;
 using GalaSoft.MvvmLight.Command;
@@ -29,11 +30,12 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             ColorString = ModelLayer.ColorString;
             MainViewVisibility = ModelLayer.MainViewVisibility;
             BasketViewVisibility = ModelLayer.BasketViewVisibility;
-            fruits = new ObservableCollection<FruitDTO>();
-            foreach(FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            fruits = new ObservableCollection<FruitPresentation>();
+            foreach(FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 Fruits.Add(fruit);
             }
+            ModelLayer.WarehousePresentation.PriceChanged += OnPriceChanged;
             basket = ModelLayer.Basket;
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
@@ -48,6 +50,14 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
         }
 
+        private void OnPriceChanged(object sender, PriceChangeEventArgs e)
+        {
+            ObservableCollection<FruitPresentation> newFruits = Fruits;
+            FruitPresentation fruit = newFruits.FirstOrDefault(x => x.ID == e.Id);
+            int fruitIndex = newFruits.IndexOf(fruit);
+            newFruits[fruitIndex].Price = e.Price;
+            Fruits = new ObservableCollection<FruitPresentation>(newFruits);
+        }
 
         public string ColorString
         {
@@ -138,7 +148,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
         }
 
-        public ObservableCollection<FruitDTO> Fruits
+        public ObservableCollection<FruitPresentation> Fruits
         {
             get
             {
@@ -192,7 +202,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             Basket.Buy();
             BasketSum = Basket.Sum();
             Fruits.Clear();
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 Fruits.Add(fruit);
             }
@@ -206,7 +216,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void FruitButtonClickHandler(Guid id)
         {
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 if (fruit.ID.Equals(id))
                 {
@@ -219,7 +229,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private void ApplesButtonClickHandler()
         {
             Fruits.Clear();
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 if(fruit.FruitType.ToLower().Equals("apple"))
                     Fruits.Add(fruit);
@@ -229,7 +239,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private void BananasButtonClickHandler()
         {
             Fruits.Clear();
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 if (fruit.FruitType.ToLower().Equals("banana"))
                     Fruits.Add(fruit);
@@ -239,7 +249,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private void RaspberriesButtonClickHandler()
         {
             Fruits.Clear();
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 if (fruit.FruitType.ToLower().Equals("raspberry"))
                     Fruits.Add(fruit);
@@ -249,7 +259,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private void PearsButtonClickHandler()
         {
             Fruits.Clear();
-            foreach (FruitDTO fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 if (fruit.FruitType.ToLower().Equals("pear"))
                     Fruits.Add(fruit);
@@ -268,7 +278,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private IList<object> b_CirclesCollection;
         private Basket basket;
         private float basketSum;
-        private ObservableCollection<FruitDTO> fruits;
+        private ObservableCollection<FruitPresentation> fruits;
         private Timer timer;
         private int b_Radious;
         private string b_colorString;

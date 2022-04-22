@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Timers;
 using ShopData;
 
@@ -24,8 +25,10 @@ namespace ShopLogic
         private Random Rand { get; set; }
         private void GetNewPromotion(Object source, ElapsedEventArgs e)
         {
-            Promotion = ((float)Rand.NextDouble() / 4f) + 0.75f;
-            FruitOnPromotionID = Warehouse.Stock[Rand.Next(0, Warehouse.Stock.Count)].ID;
+            Promotion = ((float)Rand.NextDouble() * 0.5f) + 0.7f; // 0.7 .. 1.2
+            IFruit fruit = Warehouse.Stock[Rand.Next(0, Warehouse.Stock.Count)];
+            FruitOnPromotionID = fruit.ID;
+            Warehouse.ChangeFruitPrice(FruitOnPromotionID, fruit.Price * Promotion);
         }
 
         public Tuple<Guid, float> GetCurrentPromotion()

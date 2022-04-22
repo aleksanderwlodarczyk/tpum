@@ -10,16 +10,16 @@ namespace TP.ConcurrentProgramming.PresentationModel
 {
     public class Basket
     {
-        public ObservableCollection<FruitDTO> Fruits { get; set; }
+        public ObservableCollection<FruitPresentation> Fruits { get; set; }
         private IShop Shop { get; set; }
 
-        public Basket(ObservableCollection<FruitDTO> fruits, IShop shop)
+        public Basket(ObservableCollection<FruitPresentation> fruits, IShop shop)
         {
             Fruits = fruits;
             Shop = shop;
         }
 
-        public void Add(FruitDTO fruit)
+        public void Add(FruitPresentation fruit)
         {
             Fruits.Add(fruit);
         }
@@ -27,7 +27,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public float Sum()
         {
             float res = 0f;
-            foreach (FruitDTO fruit in Fruits)
+            foreach (FruitPresentation fruit in Fruits)
             {
                 res += fruit.Price;
             }
@@ -37,7 +37,14 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public bool Buy()
         {
-            bool res = Shop.Sell(Fruits.ToList());
+            List<FruitDTO> shoppingList = new List<FruitDTO>();
+
+            foreach (FruitPresentation fruitPresentation in Fruits)
+            {
+                shoppingList.Add(Shop.GetAvailableFruits().FirstOrDefault(x => x.ID == fruitPresentation.ID));
+            }
+
+            bool res = Shop.Sell(shoppingList);
             if (res)
                 Fruits.Clear();
 
