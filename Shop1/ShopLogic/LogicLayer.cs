@@ -2,18 +2,23 @@
 
 namespace ShopLogic
 {
-    public class LogicLayer
+    public interface ILogicLayer
     {
-        public IShop Shop { get; private set; }
-
-        public LogicLayer(DataLayer data)
+        public IShop Shop { get; }
+        public static ILogicLayer Create(IDataLayer data = default(IDataLayer))
         {
-            Shop = new Shop(data.Warehouse);
+            return new LogicLayer(data ?? IDataLayer.Create());
         }
+    }
+    internal class LogicLayer : ILogicLayer
+    {
+        public IShop Shop { get; }
+        private IDataLayer Data { get; }
 
-        public static LogicLayer Create()
+        public LogicLayer(IDataLayer data)
         {
-            return new LogicLayer(DataLayer.Create());
+            Data = data;
+            Shop = new Shop(Data.Warehouse);
         }
     }
 }

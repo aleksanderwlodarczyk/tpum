@@ -11,7 +11,7 @@ namespace ShopDataTest
         [TestInitialize]
         public void Initialize()
         {
-            warehouse = DataLayer.Create().Warehouse;
+            warehouse = IDataLayer.Create().Warehouse;
             Assert.IsNotNull(warehouse);
             warehouse.Stock.Clear();
             Assert.AreEqual(0, warehouse.Stock.Count);

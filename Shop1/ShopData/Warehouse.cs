@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShopData
 {
-    internal class Warehouse : IWarehouse
+    public class Warehouse : IWarehouse
     {
         public Warehouse()
         {

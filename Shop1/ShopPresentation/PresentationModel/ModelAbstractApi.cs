@@ -15,20 +15,16 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public abstract Basket Basket { get; }
         public abstract Timer Timer { get; }
 
-        public static ModelAbstractApi CreateApi()
+        public static ModelAbstractApi CreateApi(ILogicLayer logicLayer = default(ILogicLayer))
         {
-            return new ModelApi();
+            return new ModelApi(logicLayer ?? ILogicLayer.Create());
         }
     }
 
     internal class ModelApi : ModelAbstractApi
     {
-        public ModelApi() : this(LogicLayer.Create())
-        {
 
-        }
-
-        public ModelApi(LogicLayer logicLayer)
+        public ModelApi(ILogicLayer logicLayer)
         {
             this.logicLayer = logicLayer;
         }
@@ -46,6 +42,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public override Timer Timer => new Timer();
 
-        private LogicLayer logicLayer;
+        private ILogicLayer logicLayer;
     }
 }

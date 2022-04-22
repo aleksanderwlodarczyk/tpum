@@ -6,14 +6,25 @@ using System.Threading.Tasks;
 
 namespace ShopData
 {
-    public class DataLayer
-    {
-        public IWarehouse Warehouse { get; private set; }
 
-        public DataLayer()
+    public interface IDataLayer
+    {
+        public IWarehouse Warehouse { get; set; }
+
+        public static IDataLayer Create()
+        {
+            return new DataLayer();
+        }
+    }
+    internal class DataLayer : IDataLayer
+    {
+
+        internal DataLayer()
         {
             Warehouse = new Warehouse();
         }
+
+        public IWarehouse Warehouse { get; set; }
 
         public static DataLayer Create()
         {
