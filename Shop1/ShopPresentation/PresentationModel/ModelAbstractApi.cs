@@ -13,7 +13,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public abstract string BasketViewVisibility { get; } 
         public abstract WarehousePresentation WarehousePresentation { get; }
         public abstract Basket Basket { get; }
-        public abstract Timer Timer { get; }
 
         public static ModelAbstractApi CreateApi(ILogicLayer logicLayer = default(ILogicLayer))
         {
@@ -39,8 +38,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public override Basket Basket => new Basket(new ObservableCollection<FruitDTO>(), logicLayer.Shop);
 
         public override WarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
-
-        public override Timer Timer => new Timer();
 
         private ILogicLayer logicLayer;
     }

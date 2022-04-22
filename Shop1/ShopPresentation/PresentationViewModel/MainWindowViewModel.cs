@@ -35,7 +35,6 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                 Fruits.Add(fruit);
             }
             basket = ModelLayer.Basket;
-            timer = ModelLayer.Timer;
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
             MainPageButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => MainPagetButtonClickHandler());
@@ -47,26 +46,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             BuyButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BuyButtonClickHandler());
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
-            timer.Interval = 10000;
-            timer.Enabled = true;
-            timer.Elapsed += Timer_Elapsed;
         }
 
-        ~MainWindowViewModel()
-        {
-            timer.Elapsed -= Timer_Elapsed;
-        }
-
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            List<FruitDTO> fruitsInShop = ModelLayer.WarehousePresentation.GetFruits();
-            Fruits = new ObservableCollection<FruitDTO>();
-
-            foreach (FruitDTO fruit in fruitsInShop)
-            {
-                Fruits.Add(fruit);
-            }
-        }
 
         public string ColorString
         {
