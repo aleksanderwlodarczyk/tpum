@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ShopData;
 
 namespace ShopLogic
@@ -7,5 +8,6 @@ namespace ShopLogic
     {
         public bool Sell(List<FruitDTO> fruits);
         public List<FruitDTO> GetAvailableFruits(bool withPromotion = true);
+        public event EventHandler<PriceChangeEventArgs> PriceChanged;
     }
 }

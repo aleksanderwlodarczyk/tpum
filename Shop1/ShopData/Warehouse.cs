@@ -22,6 +22,8 @@ namespace ShopData
             Stock.Add(new Fruit("malinka", 23f, CountryOfOrigin.Poland, FruitType.RaspBerry));
             Stock.Add(new Fruit("malinka czarna", 169f, CountryOfOrigin.USA, FruitType.RaspBerry));
         }
+
+        public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public List<IFruit> Stock { get; }
 
         public void RemoveFruits(List<IFruit> fruits)
@@ -55,6 +57,24 @@ namespace ShopData
             }
 
             return fruits;
+        }
+
+        public void ChangeFruitPrice(Guid id, float newPrice)
+        {
+            IFruit fruit = Stock.Find(x => x.ID.Equals(id));
+
+            if (fruit == null)
+                return;
+            if (Math.Abs(newPrice - fruit.Price) < 0.01f)
+                return;
+            fruit.Price = newPrice;
+            OnPriceChanged(fruit.ID, fruit.Price);
+        }
+
+        private void OnPriceChanged(Guid id, float price)
+        {
+            EventHandler<PriceChangeEventArgs> handler = PriceChanged;
+            handler?.Invoke(this, new PriceChangeEventArgs(id, price));
         }
     }
 }

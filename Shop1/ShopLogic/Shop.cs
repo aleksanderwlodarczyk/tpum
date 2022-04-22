@@ -15,6 +15,7 @@ namespace ShopLogic
         {
             this.warehouse = warehouse;
             promotionManager = new PromotionManager(warehouse);
+            warehouse.PriceChanged += OnPriceChanged;
         }
 
         public bool Sell(List<FruitDTO> fruitDTOs)
@@ -52,6 +53,15 @@ namespace ShopLogic
             }
 
             return result;
+        }
+
+        public event EventHandler<PriceChangeEventArgs> PriceChanged;
+
+
+        private void OnPriceChanged(object sender, ShopData.PriceChangeEventArgs e)
+        {
+            EventHandler<PriceChangeEventArgs> handler = PriceChanged;
+            handler?.Invoke(this, new ShopLogic.PriceChangeEventArgs(e.Id, e.Price));
         }
     }
 }
