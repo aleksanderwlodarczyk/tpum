@@ -11,17 +11,17 @@ namespace ShopData
     {
         public IWarehouse Warehouse { get; set; }
 
-        public static IDataLayer Create()
+        public static IDataLayer Create(IWarehouse warehouse = default)
         {
-            return new DataLayer();
+            return new DataLayer(warehouse);
         }
     }
     internal class DataLayer : IDataLayer
     {
 
-        internal DataLayer()
+        internal DataLayer(IWarehouse warehouse = default)
         {
-            Warehouse = new Warehouse();
+            Warehouse = warehouse ?? new Warehouse();
         }
 
         public IWarehouse Warehouse { get; set; }
