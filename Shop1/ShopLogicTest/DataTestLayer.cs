@@ -9,7 +9,7 @@ namespace ShopLogicTest
 
         public DataTestLayer(IWarehouse warehouse)
         {
-            Warehouse = warehouse;
+            Warehouse = warehouse ?? new WarehouseTestExample();
             //Warehouse = new WarehouseTestExample();
             //Warehouse.Stock.Clear();
 

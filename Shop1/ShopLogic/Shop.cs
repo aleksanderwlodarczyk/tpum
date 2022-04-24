@@ -46,10 +46,10 @@ namespace ShopLogic
 
             foreach (IFruit fruit in warehouse.Stock)
             {
-                float price = fruit.Price;
-                if (fruit.ID.Equals(promotion.Item1))
-                    price *= promotion.Item2;
-                result.Add(new FruitDTO { Price = price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
+                //float price = fruit.Price;
+                //if (fruit.ID.Equals(promotion.Item1))
+                //    price *= promotion.Item2;
+                result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
             }
 
             return result;
