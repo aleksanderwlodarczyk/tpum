@@ -50,7 +50,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
         }
 
-        private void OnPriceChanged(object sender, PriceChangeEventArgs e)
+        private void OnPriceChanged(object sender, TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs e)
         {
             ObservableCollection<FruitPresentation> newFruits = Fruits;
             FruitPresentation fruit = newFruits.FirstOrDefault(x => x.ID == e.Id);

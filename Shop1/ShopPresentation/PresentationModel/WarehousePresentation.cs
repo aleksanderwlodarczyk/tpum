@@ -15,10 +15,10 @@ namespace TP.ConcurrentProgramming.PresentationModel
             Shop.PriceChanged += OnPriceChanged;
         }
 
-        private void OnPriceChanged(object sender, PriceChangeEventArgs e)
+        private void OnPriceChanged(object sender, ShopLogic.PriceChangeEventArgs e)
         {
-            EventHandler<PriceChangeEventArgs> handler = PriceChanged;
-            handler?.Invoke(this, e);
+            EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> handler = PriceChanged;
+            handler?.Invoke(this, new TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs(e.Id, e.Price));
         }
 
         public List<FruitPresentation> GetFruits()
@@ -31,6 +31,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
             return fruits;
         }
 
-        public event EventHandler<PriceChangeEventArgs> PriceChanged;
+        public event EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> PriceChanged;
     }
 }
