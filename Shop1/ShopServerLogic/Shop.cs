@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ShopData;
+using ShopServerData;
 
-namespace ShopLogic
+namespace ShopServerLogic
 {
     internal class Shop : IShop
     {
@@ -22,7 +22,7 @@ namespace ShopLogic
         {
             List<Guid> guids = new List<Guid>();
 
-            foreach (FruitDTO fruitDTO in fruitDTOs)
+            foreach (IFruitDTO fruitDTO in fruitDTOs)
             {
                 guids.Add(fruitDTO.ID);
             }
@@ -49,13 +49,7 @@ namespace ShopLogic
                 //float price = fruit.Price;
                 //if (fruit.ID.Equals(promotion.Item1))
                 //    price *= promotion.Item2;
-                var dto = new FruitDTO();
-                dto.Price = fruit.Price;
-                dto.ID = fruit.ID;
-                dto.Name = fruit.Name;
-                dto.FruitType = fruit.FruitType.ToString();
-                dto.Origin = fruit.Origin.ToString();
-                result.Add(dto);
+                result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
             }
 
             return result;
@@ -64,10 +58,10 @@ namespace ShopLogic
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
 
 
-        private void OnPriceChanged(object sender, ShopData.PriceChangeEventArgs e)
+        private void OnPriceChanged(object sender, ShopServerData.PriceChangeEventArgs e)
         {
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;
-            handler?.Invoke(this, new ShopLogic.PriceChangeEventArgs(e.Id, e.Price));
+            handler?.Invoke(this, new ShopServerLogic.PriceChangeEventArgs(e.Id, e.Price));
         }
     }
 }

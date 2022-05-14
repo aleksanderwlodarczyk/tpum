@@ -24,7 +24,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public List<FruitPresentation> GetFruits()
         {
             List<FruitPresentation> fruits = new List<FruitPresentation>();
-            foreach (FruitDTO fruit in Shop.GetAvailableFruits())
+            foreach (IFruitDTO fruit in Shop.GetAvailableFruits())
             {
                 fruits.Add(new FruitPresentation(fruit.Name, fruit.Price, fruit.ID, fruit.Origin, fruit.FruitType));
             }

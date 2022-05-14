@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopData
+namespace ShopServerData
 {
     internal class Warehouse : IWarehouse
     {
@@ -12,8 +12,6 @@ namespace ShopData
         {
             Stock = new List<IFruit>();
 
-
-            //TODO: connect to server and download products
             Stock.Add(new Fruit("jabłko zielone", 69f, CountryOfOrigin.Poland, FruitType.Apple));
             Stock.Add(new Fruit("jabłko czerwone", 96f, CountryOfOrigin.Poland, FruitType.Apple));
             Stock.Add(new Fruit("Banan bio", 98f, CountryOfOrigin.China, FruitType.Banana));

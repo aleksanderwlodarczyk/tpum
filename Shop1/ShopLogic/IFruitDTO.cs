@@ -2,7 +2,7 @@
 
 namespace ShopLogic
 {
-    internal class FruitDTO : IFruitDTO
+    public interface IFruitDTO
     {
         public string Name { get; set; }
         public float Price { get; set; }

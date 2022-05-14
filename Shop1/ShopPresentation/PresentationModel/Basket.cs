@@ -37,7 +37,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public bool Buy()
         {
-            List<FruitDTO> shoppingList = new List<FruitDTO>();
+            List<IFruitDTO> shoppingList = new List<IFruitDTO>();
 
             foreach (FruitPresentation fruitPresentation in Fruits)
             {

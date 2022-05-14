@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ShopData;
+using ShopServerData;
 
-namespace ShopLogic
+namespace ShopServerLogic
 {
     public interface IShop
     {

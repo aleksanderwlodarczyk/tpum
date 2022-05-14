@@ -40,7 +40,7 @@ namespace ShopLogicTest
         [TestMethod]
         public void GetAvailableProducts()
         {
-            List<FruitDTO> fruits = shop.GetAvailableFruits();
+            List<IFruitDTO> fruits = shop.GetAvailableFruits();
             Assert.IsNotNull(fruits);
             Assert.AreEqual(9, fruits.Count);
         }
@@ -48,13 +48,13 @@ namespace ShopLogicTest
         [TestMethod]
         public void SellAllTest()
         {
-            List<FruitDTO> fruits = shop.GetAvailableFruits();
+            List<IFruitDTO> fruits = shop.GetAvailableFruits();
             Assert.IsNotNull(fruits);
             Assert.AreEqual(9, fruits.Count);
 
             shop.Sell(fruits);
 
-            List<FruitDTO> remainingFruits = shop.GetAvailableFruits();
+            List<IFruitDTO> remainingFruits = shop.GetAvailableFruits();
             Assert.IsNotNull(remainingFruits);
             Assert.AreEqual(0, remainingFruits.Count);
         }
@@ -62,22 +62,22 @@ namespace ShopLogicTest
         [TestMethod]
         public void SellTest()
         {
-            List<FruitDTO> fruits = shop.GetAvailableFruits();
+            List<IFruitDTO> fruits = shop.GetAvailableFruits();
             Assert.IsNotNull(fruits);
             Assert.AreEqual(9, fruits.Count);
 
-            List<FruitDTO> fruitsFromPoland = fruits.FindAll(x => x.Origin.ToLower().Equals("poland"));
+            List<IFruitDTO> fruitsFromPoland = fruits.FindAll(x => x.Origin.ToLower().Equals("poland"));
             fruitsFromPoland.ForEach(x => fruits.Remove(x));
             Assert.AreEqual(5, fruits.Count);
             Assert.AreEqual(4, fruitsFromPoland.Count);
 
             shop.Sell(fruitsFromPoland);
 
-            List<FruitDTO> remainingFruits = shop.GetAvailableFruits();
+            List<IFruitDTO> remainingFruits = shop.GetAvailableFruits();
             Assert.IsNotNull(remainingFruits);
             Assert.AreEqual(5, remainingFruits.Count);
 
-            List<FruitDTO> fruitsInShopFromPoland = remainingFruits.FindAll(x => x.Origin.ToLower().Equals("poland"));
+            List<IFruitDTO> fruitsInShopFromPoland = remainingFruits.FindAll(x => x.Origin.ToLower().Equals("poland"));
             Assert.IsNotNull(fruitsInShopFromPoland);
             Assert.AreEqual(0, fruitsInShopFromPoland.Count);
         }

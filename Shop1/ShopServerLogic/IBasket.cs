@@ -1,4 +1,4 @@
-﻿namespace ShopLogic
+﻿namespace ShopServerLogic
 {
     public interface IBasket
     {

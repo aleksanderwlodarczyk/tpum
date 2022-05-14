@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShopLogic
+namespace ShopServerLogic
 {
     internal class FruitDTO : IFruitDTO
     {
