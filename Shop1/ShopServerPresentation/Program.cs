@@ -14,7 +14,7 @@ namespace ShopServerPresentation
 
         static void ConnectionHandler(WebSocketConnection webSocketConnection)
         {
-            
+            Console.WriteLine("[Server]: Client connected");
             webSocketConnection.onMessage = ParseMessage;
             webSocketConnection.onClose = () => { Console.WriteLine("[Server]: Connection closed"); };
             webSocketConnection.onError = () => { Console.WriteLine("[Server]: Connection error encountered"); };
