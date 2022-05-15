@@ -1,11 +1,4 @@
-﻿//___________________________________________________________________________________
-//
-//  Copyright (C) 2020, Mariusz Postol LODZ POLAND.
-//
-//  To be in touch join the community at GITTER: https://gitter.im/mpostol/TP
-//___________________________________________________________________________________
-
-using System;
+﻿using System;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
@@ -109,6 +102,10 @@ namespace ShopServerPresentation
                         count += _receiveResult.Count;
                     }
                     string _message = Encoding.UTF8.GetString(buffer, 0, count);
+                    if (_message.Length > 0)
+                    {
+                        Console.WriteLine(_message);
+                    }
                     onMessage?.Invoke(_message);
                 }
             }

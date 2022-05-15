@@ -11,6 +11,8 @@ namespace ShopData
     {
         #region API
 
+        public static WebSocketConnection CurrentConnection { get; private set; }
+
         public static async Task<WebSocketConnection> Connect(Uri peer, Action<string> log)
         {
             ClientWebSocket m_ClientWebSocket = new ClientWebSocket();
@@ -18,7 +20,7 @@ namespace ShopData
             switch (m_ClientWebSocket.State)
             {
                 case WebSocketState.Open:
-                    log($"Opening WebSocket connection to remote server {peer}");
+                    //log($"Opening WebSocket connection to remote server {peer}");
                     WebSocketConnection _socket = new ClintWebSocketConnection(m_ClientWebSocket, peer, log);
                     return _socket;
 
@@ -27,7 +29,11 @@ namespace ShopData
                     throw new WebSocketException($"Cannot connect to remote node status {m_ClientWebSocket.State}");
             }
         }
-
+        public static async Task Disconnect()
+        {
+            await CurrentConnection.DisconnectAsync();
+            CurrentConnection = null;
+        }
         #endregion API
 
         #region private
@@ -41,6 +47,8 @@ namespace ShopData
                 m_Log = log;
                 Task.Factory.StartNew(() => ClientMessageLoop());
             }
+
+            public override bool IsConnected => m_ClientWebSocket.State == WebSocketState.Open;
 
             #region WebSocketConnection
 

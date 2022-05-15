@@ -7,16 +7,20 @@ using TP.ConcurrentProgramming.PresentationModel;
 using TP.ConcurrentProgramming.PresentationViewModel.MVVMLight;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using ShopLogic;
 using Microsoft.Toolkit.Mvvm;
 using GalaSoft.MvvmLight.Command;
 using System.Timers;
+using ShopData;
 
 namespace TP.ConcurrentProgramming.PresentationViewModel
 {
     public class MainWindowViewModel : ViewModelBase
 
     {
+
+        private  IConnectionService _connectionService;
         #region public API
 
         public MainWindowViewModel() : this(ModelAbstractApi.CreateApi())
@@ -39,6 +43,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             basket = ModelLayer.Basket;
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
+            ConnectButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ConnectButtonClickHandler());
             MainPageButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => MainPagetButtonClickHandler());
             ApplesButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ApplesButtonClickHandler());
             BananasButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BananasButtonClickHandler());
@@ -48,6 +53,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             BuyButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BuyButtonClickHandler());
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
+            _connectionService = ServiceFactory.CreateConnectionService;
         }
 
         private void OnPriceChanged(object sender, TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs e)
@@ -71,6 +77,21 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                     return;
                 b_colorString = value;
                 RaisePropertyChanged("ColorString");
+            }
+        }
+
+        public string ConnectButtonText
+        {
+            get
+            {
+                return b_connectButtonText;
+            }
+            set
+            {
+                if (value.Equals(b_connectButtonText))
+                    return;
+                b_connectButtonText = value;
+                RaisePropertyChanged("ConnectButtonText");
             }
         }
 
@@ -180,6 +201,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         public ICommand ButtomClick { get; set; }
         public ICommand BasketButtonClick { get; set; }
+        public ICommand ConnectButtonClick { get; set; }
         public ICommand MainPageButtonClick { get; set; }
         public ICommand ApplesButtonClick { get; set; }
         public ICommand BananasButtonClick { get; set; }
@@ -212,6 +234,17 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         {
             BasketViewVisibility = "Visible";
             MainViewVisibility = "Hidden";
+        }
+
+        private async Task ConnectButtonClickHandler()
+        {
+            ConnectButtonText = "łączenie";
+            bool result = await _connectionService.Connect(new Uri("ws://localhost:8081"));
+            if (result)
+            {
+                ConnectButtonText = "połączono";
+            }
+            
         }
 
         private void FruitButtonClickHandler(Guid id)
@@ -282,6 +315,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private Timer timer;
         private int b_Radious;
         private string b_colorString;
+        private string b_connectButtonText;
         private string b_mainViewVisibility;
         private string b_basketViewVisibility;
         private ModelAbstractApi ModelLayer;

@@ -9,6 +9,8 @@ namespace ShopData
         public virtual Action onClose { set; protected get; } = () => { };
         public virtual Action onError { set; protected get; } = () => { };
 
+        public virtual bool IsConnected { get; }
+
         public async Task SendAsync(string message)
         {
             await SendTask(message);
