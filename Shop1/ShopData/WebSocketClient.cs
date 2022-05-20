@@ -22,6 +22,7 @@ namespace ShopData
                 case WebSocketState.Open:
                     //log($"Opening WebSocket connection to remote server {peer}");
                     WebSocketConnection _socket = new ClintWebSocketConnection(m_ClientWebSocket, peer, log);
+                    CurrentConnection = _socket;
                     return _socket;
 
                 default:

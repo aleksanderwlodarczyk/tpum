@@ -34,6 +34,11 @@ namespace ShopLogic
             return true;
         }
 
+        public async Task SendMessageAsync(string message)
+        {
+            await warehouse.SendAsync(message);
+        }
+
         public List<IFruitDTO> GetAvailableFruits(bool withPromotion = true)
         {
             Tuple<Guid, float> promotion = new Tuple<Guid, float>(Guid.Empty, 1f);

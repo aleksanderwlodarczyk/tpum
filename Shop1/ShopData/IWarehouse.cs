@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShopData
 {
@@ -13,5 +14,7 @@ namespace ShopData
         public List<IFruit> GetFruitsOfOrigin(CountryOfOrigin origin);
         public List<IFruit> GetFruitsWithIDs(List<Guid> IDs);
         public void ChangeFruitPrice(Guid id, float newPrice);
+
+        public Task SendAsync(string message);
     }
 }

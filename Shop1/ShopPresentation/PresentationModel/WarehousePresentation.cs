@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using ShopLogic;
 
 namespace TP.ConcurrentProgramming.PresentationModel
@@ -19,6 +20,11 @@ namespace TP.ConcurrentProgramming.PresentationModel
         {
             EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> handler = PriceChanged;
             handler?.Invoke(this, new TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs(e.Id, e.Price));
+        }
+
+        public async Task SendMessageAsync(string message)
+        {
+            Shop.SendMessageAsync(message);
         }
 
         public List<FruitPresentation> GetFruits()

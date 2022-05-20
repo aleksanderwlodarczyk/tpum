@@ -234,6 +234,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         {
             BasketViewVisibility = "Visible";
             MainViewVisibility = "Hidden";
+
+            ModelLayer.WarehousePresentation.SendMessageAsync("BasketButtonClicked");
         }
 
         private async Task ConnectButtonClickHandler()
@@ -302,6 +304,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         {
             BasketViewVisibility = "Hidden";
             MainViewVisibility = "Visible";
+
+            ModelLayer.WarehousePresentation.SendMessageAsync("echo");
         }
 
         #endregion public API

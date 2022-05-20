@@ -73,6 +73,11 @@ namespace ShopData
             OnPriceChanged(fruit.ID, fruit.Price);
         }
 
+        public async Task SendAsync(string message)
+        {
+            await WebSocketClient.CurrentConnection.SendAsync(message);
+        }
+
         private void OnPriceChanged(Guid id, float price)
         {
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;

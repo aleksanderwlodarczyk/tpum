@@ -11,6 +11,8 @@ namespace ShopServerPresentation
     {
         #region API
 
+        public static WebSocketConnection CurrentConnection { get; set; }
+
         public static async Task Server(int p2p_port, Action<WebSocketConnection> onConnection)
         {
             Uri _uri = new Uri($@"http://localhost:{p2p_port}/");
@@ -102,10 +104,7 @@ namespace ShopServerPresentation
                         count += _receiveResult.Count;
                     }
                     string _message = Encoding.UTF8.GetString(buffer, 0, count);
-                    if (_message.Length > 0)
-                    {
-                        Console.WriteLine(_message);
-                    }
+
                     onMessage?.Invoke(_message);
                 }
             }
