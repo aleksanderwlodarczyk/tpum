@@ -65,10 +65,18 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             if (fruit != null)
             {
                 int fruitIndex = newFruits.IndexOf(fruit);
-                newFruits[fruitIndex].Price = e.Price;
-                newFruits[fruitIndex].Name = e.Name;
-                newFruits[fruitIndex].Origin = e.Origin;
-                newFruits[fruitIndex].FruitType = e.FruitType;
+
+                if (e.FruitType.ToLower() == "deleted")
+                {
+                    newFruits.RemoveAt(fruitIndex);
+                }
+                else
+                {
+                    newFruits[fruitIndex].Price = e.Price;
+                    newFruits[fruitIndex].Name = e.Name;
+                    newFruits[fruitIndex].Origin = e.Origin;
+                    newFruits[fruitIndex].FruitType = e.FruitType;
+                }
             }
             else
             {
@@ -163,6 +171,21 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
         }
 
+        public string TransactionStatusText
+        {
+            get
+            {
+                return transactionStatusText;
+            }
+            set
+            {
+                if (value.Equals(transactionStatusText))
+                    return;
+                transactionStatusText = value;
+                RaisePropertyChanged("TransactionStatusText");
+            }
+        }
+
         public Basket Basket
         {
             get
@@ -242,9 +265,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             //this.Navigate(new Uri("BasketWindow.xaml", UriKind.Relative));
         }
 
-        private void BuyButtonClickHandler()
+        private async void BuyButtonClickHandler()
         {
-            Basket.Buy();
+            bool result = await Basket.Buy();
+            TransactionStatusText = result ? "Zakup pomyślny" : "Nie udało się zakupić owoców";
             BasketSum = Basket.Sum();
             Fruits.Clear();
             foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
@@ -343,6 +367,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private IList<object> b_CirclesCollection;
         private Basket basket;
         private float basketSum;
+        private string transactionStatusText;
         private ObservableCollection<FruitPresentation> fruits;
         private Timer timer;
         private int b_Radious;

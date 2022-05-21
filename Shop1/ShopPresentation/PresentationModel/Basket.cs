@@ -45,6 +45,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
             }
 
             bool res = await Shop.Sell(shoppingList);
+
             if (res)
                 Fruits.Clear();
 
