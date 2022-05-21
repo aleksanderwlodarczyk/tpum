@@ -31,7 +31,7 @@ namespace ShopData
             FruitType = fruitType;
         }
 
-        public string Name { get; }
+        public string Name { get; set; }
         public float Price
         {
             get => price;
@@ -43,8 +43,8 @@ namespace ShopData
             }
         }
         public Guid ID { get; }
-        public CountryOfOrigin Origin { get; }
-        public FruitType FruitType { get; }
+        public CountryOfOrigin Origin { get; set; }
+        public FruitType FruitType { get; set; }
 
         private float price;
     }

@@ -70,6 +70,7 @@ namespace ShopLogic
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public event EventHandler<IFruitDTO> OnFruitChanged;
+        public event EventHandler<IFruitDTO> OnFruitRemoved;
 
 
         private void OnPriceChanged(object sender, ShopData.PriceChangeEventArgs e)
@@ -97,7 +98,10 @@ namespace ShopLogic
             dto.FruitType = value.FruitType.ToString();
             dto.Origin = value.Origin.ToString();
 
-            OnFruitChanged?.Invoke(this, dto);
+            if (value.Price < -0.01f && value.Name == "" && value.FruitType == FruitType.Deleted && value.Origin == CountryOfOrigin.Deleted)
+                OnFruitRemoved?.Invoke(this, dto);
+            else
+                OnFruitChanged?.Invoke(this, dto);
         }
 
         private void Unsunscribe()

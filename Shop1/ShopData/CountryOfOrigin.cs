@@ -2,6 +2,7 @@
 {
     public enum CountryOfOrigin
     {
+        Deleted,
         Poland,
         England,
         Germany,

@@ -14,5 +14,6 @@ namespace ShopLogic
         public List<IFruitDTO> GetAvailableFruits(bool withPromotion = true);
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public event EventHandler<IFruitDTO> OnFruitChanged;
+        public event EventHandler<IFruitDTO> OnFruitRemoved;
     }
 }
