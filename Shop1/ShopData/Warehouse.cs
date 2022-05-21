@@ -12,22 +12,26 @@ namespace ShopData
         {
             Stock = new List<IFruit>();
 
+            waitingForStockUpdate = false;
 
-            //TODO: connect to server and download products
-            Stock.Add(new Fruit("jabłko zielone", 69f, CountryOfOrigin.Poland, FruitType.Apple));
-            Stock.Add(new Fruit("jabłko czerwone", 96f, CountryOfOrigin.Poland, FruitType.Apple));
-            Stock.Add(new Fruit("Banan bio", 98f, CountryOfOrigin.China, FruitType.Banana));
-            Stock.Add(new Fruit("Banan zwykły", 34f, CountryOfOrigin.India, FruitType.Banana));
-            Stock.Add(new Fruit("Gruszka", 2f, CountryOfOrigin.Poland, FruitType.Pear));
-            Stock.Add(new Fruit("Gruszka zielona", 67f, CountryOfOrigin.Germany, FruitType.Pear));
-            Stock.Add(new Fruit("Gruszka czerwona", 54f, CountryOfOrigin.England, FruitType.Pear));
-            Stock.Add(new Fruit("malinka", 23f, CountryOfOrigin.Poland, FruitType.RaspBerry));
-            Stock.Add(new Fruit("malinka czarna", 169f, CountryOfOrigin.USA, FruitType.RaspBerry));
+            WebSocketClient.OnConnected += Connected;
+
+
+            ////TODO: connect to server and download products
+            //Stock.Add(new Fruit("jabłko zielone", 69f, CountryOfOrigin.Poland, FruitType.Apple));
+            //Stock.Add(new Fruit("jabłko czerwone", 96f, CountryOfOrigin.Poland, FruitType.Apple));
+            //Stock.Add(new Fruit("Banan bio", 98f, CountryOfOrigin.China, FruitType.Banana));
+            //Stock.Add(new Fruit("Banan zwykły", 34f, CountryOfOrigin.India, FruitType.Banana));
+            //Stock.Add(new Fruit("Gruszka", 2f, CountryOfOrigin.Poland, FruitType.Pear));
+            //Stock.Add(new Fruit("Gruszka zielona", 67f, CountryOfOrigin.Germany, FruitType.Pear));
+            //Stock.Add(new Fruit("Gruszka czerwona", 54f, CountryOfOrigin.England, FruitType.Pear));
+            //Stock.Add(new Fruit("malinka", 23f, CountryOfOrigin.Poland, FruitType.RaspBerry));
+            //Stock.Add(new Fruit("malinka czarna", 169f, CountryOfOrigin.USA, FruitType.RaspBerry));
         }
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
-        public List<IFruit> Stock { get; }
-
+        public List<IFruit> Stock { get; private set; }
+        private bool waitingForStockUpdate;
         public void RemoveFruits(List<IFruit> fruits)
         {
             fruits.ForEach(x => Stock.Remove(x));
@@ -84,8 +88,32 @@ namespace ShopData
             //await WebSocketClient.CurrentConnection.SendAsync($"ID: {fruit.ID}, price: {fruit.Price}, name: {fruit.Name}");
             //await WebSocketClient.CurrentConnection.SendAsync($"fruits count: {fruits.Count}");
 
-
+            waitingForStockUpdate = true;
             await WebSocketClient.CurrentConnection.SendAsync(message);
+            while (waitingForStockUpdate)
+            {
+
+            }
+        }
+
+        public async Task RequestFruitsUpdate()
+        {
+            await WebSocketClient.CurrentConnection.SendAsync("RequestAll");
+        }
+
+        private async void ParseMessage(string message)
+        {
+            if (message.Contains("UpdateAll"))
+            {
+                var json = message.Substring("UpdateAll".Length);
+                Stock = Serializer.JsonToManyFruits(json);
+            }
+        }
+
+        private async void Connected()
+        {
+            WebSocketClient.CurrentConnection.onMessage = ParseMessage;
+            await RequestFruitsUpdate();
         }
 
         private void OnPriceChanged(Guid id, float price)

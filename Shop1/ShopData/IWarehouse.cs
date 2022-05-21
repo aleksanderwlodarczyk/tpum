@@ -16,5 +16,6 @@ namespace ShopData
         public void ChangeFruitPrice(Guid id, float newPrice);
 
         public Task SendAsync(string message);
+        public Task RequestFruitsUpdate();
     }
 }

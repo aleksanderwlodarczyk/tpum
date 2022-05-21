@@ -65,6 +65,11 @@ namespace ShopLogicTest
             throw new NotImplementedException();
         }
 
+        public Task RequestFruitsUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
         private void OnPriceChanged(Guid id, float price)
         {
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;

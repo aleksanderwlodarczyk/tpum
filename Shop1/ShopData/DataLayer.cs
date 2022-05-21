@@ -26,7 +26,7 @@ namespace ShopData
 
         public IWarehouse Warehouse { get; set; }
 
-        public static DataLayer Create()
+        public static IDataLayer Create(IWarehouse warehouse = default)
         {
             return new DataLayer();
         }
