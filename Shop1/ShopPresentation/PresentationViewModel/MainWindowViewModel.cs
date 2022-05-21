@@ -60,21 +60,21 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private void OnFruitChanged(object? sender, FruitPresentation e)
         {
             ObservableCollection<FruitPresentation> newFruits = new ObservableCollection<FruitPresentation>(Fruits);
-            //FruitPresentation fruit = newFruits.FirstOrDefault(x => x.ID == e.ID);
+            FruitPresentation fruit = newFruits.FirstOrDefault(x => x.ID == e.ID);
 
-            //if (fruit != null)
-            //{
-            //    int fruitIndex = newFruits.IndexOf(fruit);
-            //    newFruits[fruitIndex].Price = e.Price;
-            //    newFruits[fruitIndex].Name = e.Name;
-            //    newFruits[fruitIndex].Origin = e.Origin;
-            //    newFruits[fruitIndex].FruitType = e.FruitType;
-            //}
-            //else
-            //{
-            //    newFruits.Add(e);
-            //}
-            newFruits.Add(e);
+            if (fruit != null)
+            {
+                int fruitIndex = newFruits.IndexOf(fruit);
+                newFruits[fruitIndex].Price = e.Price;
+                newFruits[fruitIndex].Name = e.Name;
+                newFruits[fruitIndex].Origin = e.Origin;
+                newFruits[fruitIndex].FruitType = e.FruitType;
+            }
+            else
+            {
+                newFruits.Add(e);
+            }
+
             Fruits = new ObservableCollection<FruitPresentation>(newFruits);
 
         }
