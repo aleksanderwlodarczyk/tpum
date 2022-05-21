@@ -11,6 +11,7 @@ namespace ShopData
         public Warehouse()
         {
             Stock = new List<IFruit>();
+            observers = new List<IObserver<IFruit>>();
 
             waitingForStockUpdate = false;
 
