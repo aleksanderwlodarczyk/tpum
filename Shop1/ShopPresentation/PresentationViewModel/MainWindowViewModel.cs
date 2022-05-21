@@ -65,10 +65,18 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             if (fruit != null)
             {
                 int fruitIndex = newFruits.IndexOf(fruit);
-                newFruits[fruitIndex].Price = e.Price;
-                newFruits[fruitIndex].Name = e.Name;
-                newFruits[fruitIndex].Origin = e.Origin;
-                newFruits[fruitIndex].FruitType = e.FruitType;
+
+                if (e.FruitType.ToLower() == "deleted")
+                {
+                    newFruits.RemoveAt(fruitIndex);
+                }
+                else
+                {
+                    newFruits[fruitIndex].Price = e.Price;
+                    newFruits[fruitIndex].Name = e.Name;
+                    newFruits[fruitIndex].Origin = e.Origin;
+                    newFruits[fruitIndex].FruitType = e.FruitType;
+                }
             }
             else
             {
