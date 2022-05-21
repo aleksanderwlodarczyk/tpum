@@ -179,6 +179,12 @@ namespace ShopData
                 if (!transactionSuccess)
                     RequestFruitsUpdate();
             }
+            else if (message.Contains("PriceChanged"))
+            {
+                string priceChangedStr = message.Substring("PriceChanged".Length);
+                string[] parts = priceChangedStr.Split("/");
+                ChangeFruitPrice(Guid.Parse(parts[1]), float.Parse(parts[0]));
+            }
         }
 
         private async void Connected()
