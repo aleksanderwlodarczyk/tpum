@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ShopData;
 
 namespace ShopLogicTest
@@ -57,6 +58,11 @@ namespace ShopLogicTest
                 return;
             fruit.Price = newPrice;
             OnPriceChanged(fruit.ID, fruit.Price);
+        }
+
+        public Task SendAsync(string message)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnPriceChanged(Guid id, float price)

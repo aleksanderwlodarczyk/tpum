@@ -49,7 +49,7 @@ namespace ShopServerLogic
                 //float price = fruit.Price;
                 //if (fruit.ID.Equals(promotion.Item1))
                 //    price *= promotion.Item2;
-                result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = fruit.FruitType.ToString(), Origin = fruit.Origin.ToString() });
+                result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = (int)fruit.FruitType, Origin = (int)fruit.Origin });
             }
 
             return result;

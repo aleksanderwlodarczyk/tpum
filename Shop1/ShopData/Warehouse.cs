@@ -75,6 +75,16 @@ namespace ShopData
 
         public async Task SendAsync(string message)
         {
+            //testing, console writeline here hehe
+            //var json = Serializer.AllFruitsToJson(Stock);
+            //await WebSocketClient.CurrentConnection.SendAsync(json);
+
+            //var fruits = Serializer.JsonToManyFruits(json);
+            //var fruit = fruits[0];
+            //await WebSocketClient.CurrentConnection.SendAsync($"ID: {fruit.ID}, price: {fruit.Price}, name: {fruit.Name}");
+            //await WebSocketClient.CurrentConnection.SendAsync($"fruits count: {fruits.Count}");
+
+
             await WebSocketClient.CurrentConnection.SendAsync(message);
         }
 

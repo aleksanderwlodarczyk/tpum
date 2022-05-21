@@ -1,13 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("ShopDataTest")]
+[assembly: InternalsVisibleTo("ShopLogicTest")]
 
 namespace ShopData
 {
-    public class Fruit : IFruit
+    internal class Fruit : IFruit
     {
+        [JsonConstructor]
+        public Fruit(string name, float price, Guid id, CountryOfOrigin origin, FruitType fruitType)
+        {
+            Name = name;
+            Price = price;
+            Origin = origin;
+            ID = id;
+            FruitType = fruitType;
+        }
         public Fruit(string name, float price, CountryOfOrigin origin, FruitType fruitType)
         {
             Name = name;

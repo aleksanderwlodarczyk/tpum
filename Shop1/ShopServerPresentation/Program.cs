@@ -29,6 +29,15 @@ namespace ShopServerPresentation
             {
                 SendMessageAsync("echoResponse");
             }
+            //test
+            //else
+            //{
+            //    var fruits = Serializer.JsonToManyFruits(message);
+            //    Console.WriteLine("fruits count" + fruits.Count);
+            //    var fruit = fruits[0];
+            //    Console.WriteLine($"ID: {fruit.ID}, price: {fruit.Price}, name: {fruit.Name}");
+            //    Console.WriteLine($"fruits count: {fruits.Count}");
+            //}
         }
 
         static async Task SendMessageAsync(string message)
