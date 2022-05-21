@@ -268,7 +268,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private async void BuyButtonClickHandler()
         {
             bool result = await Basket.Buy();
-            TransactionStatusText = result ? "Zakup pomyślny" : "Nie udało się zakupić owoców";
+            TransactionStatusText = result ? "Zakup pomyślny" : "Nie udało się zakupić\nowoców";
             BasketSum = Basket.Sum();
             Fruits.Clear();
             foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())

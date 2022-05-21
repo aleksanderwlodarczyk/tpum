@@ -28,6 +28,14 @@ namespace ShopServerLogic
             }
 
             List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
+            if(fruits.Count != fruitDTOs.Count) return false;
+
+            foreach (IFruitDTO fruitDTO in fruitDTOs)
+            {
+                var warehouseFruit = fruits.First(x => x.ID == fruitDTO.ID);
+                if(warehouseFruit.Price != fruitDTO.Price) return false;
+            }
+
 
             warehouse.RemoveFruits(fruits);
 

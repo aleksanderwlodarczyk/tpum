@@ -49,6 +49,15 @@ namespace ShopServerPresentation
             {
                 await SendCurrentWarehouseState();
             }
+
+            if (message.Contains("RequestTransaction"))
+            {
+                var json = message.Substring("RequestTransaction".Length);
+                var fruitsToBuy = Serializer.JsonToManyFruits(json);
+                bool sellResult = shop.Sell(fruitsToBuy);
+
+                await SendMessageAsync("TransactionResult" + sellResult.ToString());
+            }
         }
 
         static async Task SendCurrentWarehouseState()
