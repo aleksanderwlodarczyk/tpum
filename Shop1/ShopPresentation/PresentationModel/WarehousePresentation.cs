@@ -14,6 +14,14 @@ namespace TP.ConcurrentProgramming.PresentationModel
         {
             Shop = shop;
             Shop.PriceChanged += OnPriceChanged;
+            Shop.OnFruitChanged += OnFruitChanged;
+        }
+
+        private void OnFruitChanged(object? sender, IFruitDTO e)
+        {
+            EventHandler<FruitPresentation> handler = FruitChanged;
+            FruitPresentation fruit = new FruitPresentation(e.Name, e.Price, e.ID, e.Origin, e.FruitType);
+            handler?.Invoke(this, fruit);
         }
 
         private void OnPriceChanged(object sender, ShopLogic.PriceChangeEventArgs e)
@@ -21,6 +29,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
             EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> handler = PriceChanged;
             handler?.Invoke(this, new TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs(e.Id, e.Price));
         }
+
 
         public async Task SendMessageAsync(string message)
         {
@@ -38,5 +47,6 @@ namespace TP.ConcurrentProgramming.PresentationModel
         }
 
         public event EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> PriceChanged;
+        public event EventHandler<FruitPresentation> FruitChanged;
     }
 }

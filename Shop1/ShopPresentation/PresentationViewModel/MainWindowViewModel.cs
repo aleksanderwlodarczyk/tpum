@@ -40,6 +40,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                 Fruits.Add(fruit);
             }
             ModelLayer.WarehousePresentation.PriceChanged += OnPriceChanged;
+            ModelLayer.WarehousePresentation.FruitChanged += OnFruitChanged;
             basket = ModelLayer.Basket;
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
@@ -54,6 +55,28 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
             _connectionService = ServiceFactory.CreateConnectionService;
+        }
+
+        private void OnFruitChanged(object? sender, FruitPresentation e)
+        {
+            ObservableCollection<FruitPresentation> newFruits = new ObservableCollection<FruitPresentation>(Fruits);
+            //FruitPresentation fruit = newFruits.FirstOrDefault(x => x.ID == e.ID);
+
+            //if (fruit != null)
+            //{
+            //    int fruitIndex = newFruits.IndexOf(fruit);
+            //    newFruits[fruitIndex].Price = e.Price;
+            //    newFruits[fruitIndex].Name = e.Name;
+            //    newFruits[fruitIndex].Origin = e.Origin;
+            //    newFruits[fruitIndex].FruitType = e.FruitType;
+            //}
+            //else
+            //{
+            //    newFruits.Add(e);
+            //}
+            newFruits.Add(e);
+            Fruits = new ObservableCollection<FruitPresentation>(newFruits);
+
         }
 
         private void OnPriceChanged(object sender, TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs e)
@@ -245,6 +268,11 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             if (result)
             {
                 ConnectButtonText = "połączono";
+                Fruits.Clear();
+                foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
+                {
+                    Fruits.Add(fruit);
+                }
             }
             
         }
