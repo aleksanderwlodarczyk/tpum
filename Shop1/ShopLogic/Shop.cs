@@ -10,17 +10,15 @@ namespace ShopLogic
     internal class Shop : IShop, IObserver<IFruit>
     {
         private IWarehouse warehouse;
-        private IPromotionManager promotionManager;
         private IDisposable unsubscriber;
         public Shop(IWarehouse warehouse)
         {
             this.warehouse = warehouse;
-            promotionManager = new PromotionManager(warehouse);
             warehouse.PriceChanged += OnPriceChanged;
             warehouse.Subscribe(this);
         }
 
-        public bool Sell(List<IFruitDTO> fruitDTOs)
+        public async Task<bool> Sell(List<IFruitDTO> fruitDTOs)
         {
             List<Guid> guids = new List<Guid>();
 
@@ -29,11 +27,15 @@ namespace ShopLogic
                 guids.Add(fruitDTO.ID);
             }
 
+
+
             List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
+            bool res = await warehouse.TryBuy(fruits);
 
-            warehouse.RemoveFruits(fruits);
+            if (res)
+                warehouse.RemoveFruits(fruits);
 
-            return true;
+            return res;
         }
 
         public async Task SendMessageAsync(string message)
@@ -41,14 +43,8 @@ namespace ShopLogic
             await warehouse.SendAsync(message);
         }
 
-        public List<IFruitDTO> GetAvailableFruits(bool withPromotion = true)
+        public List<IFruitDTO> GetAvailableFruits()
         {
-            Tuple<Guid, float> promotion = new Tuple<Guid, float>(Guid.Empty, 1f);
-            if (withPromotion)
-            {
-                promotion = promotionManager.GetCurrentPromotion();
-            }
-
             List<IFruitDTO> result = new List<IFruitDTO>();
 
             foreach (IFruit fruit in warehouse.Stock)
@@ -86,7 +82,7 @@ namespace ShopLogic
 
         public void OnError(Exception error)
         {
-            throw new NotImplementedException();
+
         }
 
         public void OnNext(IFruit value)

@@ -17,5 +17,6 @@ namespace ShopData
 
         public Task SendAsync(string message);
         public Task RequestFruitsUpdate();
+        Task<bool> TryBuy(List<IFruit> fruits);
     }
 }

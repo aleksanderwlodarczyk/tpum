@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace ShopData
             observers = new List<IObserver<IFruit>>();
 
             waitingForStockUpdate = false;
+            waitingForSellResponse = false;
+            transactionSuccess = false;
 
             WebSocketClient.OnConnected += Connected;
 
@@ -33,6 +36,8 @@ namespace ShopData
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public List<IFruit> Stock { get; private set; }
         private bool waitingForStockUpdate;
+        private bool waitingForSellResponse;
+        private bool transactionSuccess;
         private List<IObserver<IFruit>> observers;
         public void RemoveFruits(List<IFruit> fruits)
         {
@@ -53,6 +58,8 @@ namespace ShopData
 
         public void AddFruit(IFruit fruit)
         {
+            if (Stock.Find(x => x.ID == fruit.ID) != null)
+                return;
             Stock.Add(fruit);
             foreach (var observer in observers)
             {
@@ -62,6 +69,8 @@ namespace ShopData
 
         public void RemoveFruit(IFruit fruit)
         {
+            if (Stock.Find(x => x.ID == fruit.ID) == null)
+                return;
             Stock.Remove(fruit);
 
             fruit.Price = -1f;
@@ -134,17 +143,41 @@ namespace ShopData
             await WebSocketClient.CurrentConnection.SendAsync("RequestAll");
         }
 
+        public async Task<bool> TryBuy(List<IFruit> fruits)
+        {
+            waitingForSellResponse = true;
+
+            string json = Serializer.AllFruitsToJson(fruits);
+
+            await WebSocketClient.CurrentConnection.SendAsync("RequestTransaction" + json);
+
+            while (waitingForSellResponse)
+            {
+
+            }
+
+            return transactionSuccess;
+        }
+
         private void ParseMessage(string message)
         {
             if (message.Contains("UpdateAll"))
             {
-                var json = message.Substring("UpdateAll".Length);
-                var fruits = Serializer.JsonToManyFruits(json);
+                string json = message.Substring("UpdateAll".Length);
+                List<IFruit> fruits = Serializer.JsonToManyFruits(json);
                 foreach (var fruit in fruits)
                 {
                     AddFruit(fruit);
                 }
                 waitingForStockUpdate = false;
+            }
+            else if (message.Contains("TransactionResult"))
+            {
+                string resString = message.Substring("TransactionResult".Length);
+                transactionSuccess = bool.Parse(resString);
+                waitingForSellResponse = false;
+                if (!transactionSuccess)
+                    RequestFruitsUpdate();
             }
         }
 
