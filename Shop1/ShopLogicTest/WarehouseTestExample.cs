@@ -75,5 +75,10 @@ namespace ShopLogicTest
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;
             handler?.Invoke(this, new PriceChangeEventArgs(id, price));
         }
+
+        public IDisposable Subscribe(IObserver<IFruit> observer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

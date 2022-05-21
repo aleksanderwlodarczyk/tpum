@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ShopData
 {
-    public interface IWarehouse
+    public interface IWarehouse : IObservable<IFruit>
     {
         public event EventHandler<PriceChangeEventArgs> PriceChanged; 
         public List<IFruit> Stock { get; }

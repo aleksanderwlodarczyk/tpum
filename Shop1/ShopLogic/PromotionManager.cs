@@ -10,9 +10,9 @@ namespace ShopLogic
         public PromotionManager(IWarehouse warehouse)
         {
             PromotionTimer = new System.Timers.Timer(10000);
-            PromotionTimer.Elapsed += GetNewPromotion;
-            PromotionTimer.AutoReset = true;
-            PromotionTimer.Enabled = true;
+            //PromotionTimer.Elapsed += GetNewPromotion;
+            //PromotionTimer.AutoReset = true;
+            //PromotionTimer.Enabled = true;
             Warehouse = warehouse;
             Rand = new Random();
             Promotion = 1f;

@@ -7,15 +7,17 @@ using ShopData;
 
 namespace ShopLogic
 {
-    internal class Shop : IShop
+    internal class Shop : IShop, IObserver<IFruit>
     {
         private IWarehouse warehouse;
         private IPromotionManager promotionManager;
+        private IDisposable unsubscriber;
         public Shop(IWarehouse warehouse)
         {
             this.warehouse = warehouse;
             promotionManager = new PromotionManager(warehouse);
             warehouse.PriceChanged += OnPriceChanged;
+            warehouse.Subscribe(this);
         }
 
         public bool Sell(List<IFruitDTO> fruitDTOs)
@@ -67,12 +69,33 @@ namespace ShopLogic
         }
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
+        public event EventHandler<IFruit> OnFruitChanged;
 
 
         private void OnPriceChanged(object sender, ShopData.PriceChangeEventArgs e)
         {
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;
             handler?.Invoke(this, new ShopLogic.PriceChangeEventArgs(e.Id, e.Price));
+        }
+
+        public void OnCompleted()
+        {
+            this.Unsunscribe();
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(IFruit value)
+        {
+            OnFruitChanged?.Invoke(this, value);
+        }
+
+        private void Unsunscribe()
+        {
+            unsubscriber.Dispose();
         }
     }
 }

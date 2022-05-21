@@ -32,6 +32,7 @@ namespace ShopData
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public List<IFruit> Stock { get; private set; }
         private bool waitingForStockUpdate;
+        private List<IObserver<IFruit>> observers;
         public void RemoveFruits(List<IFruit> fruits)
         {
             fruits.ForEach(x => Stock.Remove(x));
@@ -39,7 +40,19 @@ namespace ShopData
 
         public void AddFruits(List<IFruit> fruits)
         {
-            Stock.AddRange(fruits);
+            foreach (var fruit in fruits)
+            {
+                AddFruit(fruit);
+            }
+        }
+
+        public void AddFruit(IFruit fruit)
+        {
+            Stock.Add(fruit);
+            foreach (var observer in observers)
+            {
+                observer.OnNext(fruit);
+            }
         }
 
         public List<IFruit> GetFruitsOfType(FruitType type)
@@ -90,10 +103,10 @@ namespace ShopData
 
             waitingForStockUpdate = true;
             await WebSocketClient.CurrentConnection.SendAsync(message);
-            while (waitingForStockUpdate)
-            {
+            //while (waitingForStockUpdate)
+            //{
 
-            }
+            //}
         }
 
         public async Task RequestFruitsUpdate()
@@ -101,12 +114,17 @@ namespace ShopData
             await WebSocketClient.CurrentConnection.SendAsync("RequestAll");
         }
 
-        private async void ParseMessage(string message)
+        private void ParseMessage(string message)
         {
             if (message.Contains("UpdateAll"))
             {
                 var json = message.Substring("UpdateAll".Length);
-                Stock = Serializer.JsonToManyFruits(json);
+                var fruits = Serializer.JsonToManyFruits(json);
+                foreach (var fruit in fruits)
+                {
+                    AddFruit(fruit);
+                }
+                waitingForStockUpdate = false;
             }
         }
 
@@ -120,6 +138,31 @@ namespace ShopData
         {
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;
             handler?.Invoke(this, new PriceChangeEventArgs(id, price));
+        }
+
+        public IDisposable Subscribe(IObserver<IFruit> observer)
+        {
+            if (!observers.Contains(observer))
+                observers.Add(observer);
+            return new Unsubscriber(observers, observer);
+        }
+
+        private class Unsubscriber : IDisposable
+        {
+            private List<IObserver<IFruit>> _observers;
+            private IObserver<IFruit> _observer;
+
+            public Unsubscriber(List<IObserver<IFruit>> observers, IObserver<IFruit> observer)
+            {
+                this._observers = observers;
+                this._observer = observer;
+            }
+
+            public void Dispose()
+            {
+                if (_observer != null && _observers.Contains(_observer))
+                    _observers.Remove(_observer);
+            }
         }
     }
 }
