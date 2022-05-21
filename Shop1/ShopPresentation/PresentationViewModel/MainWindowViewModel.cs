@@ -163,6 +163,21 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
         }
 
+        public string TransactionStatusText
+        {
+            get
+            {
+                return transactionStatusText;
+            }
+            set
+            {
+                if (value.Equals(transactionStatusText))
+                    return;
+                transactionStatusText = value;
+                RaisePropertyChanged("TransactionStatusText");
+            }
+        }
+
         public Basket Basket
         {
             get
@@ -244,7 +259,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void BuyButtonClickHandler()
         {
-            Basket.Buy();
+            bool result = Basket.Buy();
+            TransactionStatusText = result ? "Zakup pomyślny" : "Nie udało się zakupić owoców";
             BasketSum = Basket.Sum();
             Fruits.Clear();
             foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
@@ -343,6 +359,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         private IList<object> b_CirclesCollection;
         private Basket basket;
         private float basketSum;
+        private string transactionStatusText;
         private ObservableCollection<FruitPresentation> fruits;
         private Timer timer;
         private int b_Radious;
