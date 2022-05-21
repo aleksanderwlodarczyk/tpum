@@ -69,7 +69,7 @@ namespace ShopLogic
         }
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
-        public event EventHandler<IFruit> OnFruitChanged;
+        public event EventHandler<IFruitDTO> OnFruitChanged;
 
 
         private void OnPriceChanged(object sender, ShopData.PriceChangeEventArgs e)
@@ -90,7 +90,14 @@ namespace ShopLogic
 
         public void OnNext(IFruit value)
         {
-            OnFruitChanged?.Invoke(this, value);
+            var dto = new FruitDTO();
+            dto.Price = value.Price;
+            dto.ID = value.ID;
+            dto.Name = value.Name;
+            dto.FruitType = value.FruitType.ToString();
+            dto.Origin = value.Origin.ToString();
+
+            OnFruitChanged?.Invoke(this, dto);
         }
 
         private void Unsunscribe()
