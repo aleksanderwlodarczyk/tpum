@@ -2,6 +2,7 @@
 {
     public enum FruitType
     {
+        Deleted,
         Apple,
         Banana,
         Pear,

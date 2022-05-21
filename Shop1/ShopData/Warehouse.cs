@@ -36,7 +36,11 @@ namespace ShopData
         private List<IObserver<IFruit>> observers;
         public void RemoveFruits(List<IFruit> fruits)
         {
-            fruits.ForEach(x => Stock.Remove(x));
+            foreach (var fruit in fruits)
+            {
+                RemoveFruit(fruit);
+            }
+            //fruits.ForEach(x => Stock.Remove(x));
         }
 
         public void AddFruits(List<IFruit> fruits)
@@ -50,6 +54,21 @@ namespace ShopData
         public void AddFruit(IFruit fruit)
         {
             Stock.Add(fruit);
+            foreach (var observer in observers)
+            {
+                observer.OnNext(fruit);
+            }
+        }
+
+        public void RemoveFruit(IFruit fruit)
+        {
+            Stock.Remove(fruit);
+
+            fruit.Price = -1f;
+            fruit.FruitType = FruitType.Deleted;
+            fruit.Name = "";
+            fruit.Origin = CountryOfOrigin.Deleted;
+
             foreach (var observer in observers)
             {
                 observer.OnNext(fruit);
