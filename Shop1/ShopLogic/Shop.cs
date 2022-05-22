@@ -67,7 +67,6 @@ namespace ShopLogic
 
 
             await warehouse.TryBuy(fruits);
-
         }
 
         public async Task SendMessageAsync(string message)

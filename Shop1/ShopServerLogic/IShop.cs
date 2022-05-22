@@ -7,7 +7,7 @@ namespace ShopServerLogic
     public interface IShop
     {
         public bool Sell(List<IFruitDTO> fruits);
-        public List<IFruitDTO> GetAvailableFruits(bool withPromotion = true);
+        public List<IFruitDTO> GetAvailableFruits();
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
     }
 }

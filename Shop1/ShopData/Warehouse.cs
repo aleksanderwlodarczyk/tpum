@@ -153,7 +153,6 @@ namespace ShopData
             string json = Serializer.AllFruitsToJson(fruits);
 
             await WebSocketClient.CurrentConnection.SendAsync("RequestTransaction" + json);
-
         }
 
         private void ParseMessage(string message)
@@ -184,6 +183,8 @@ namespace ShopData
                     EventHandler<List<IFruit>> handler = TransactionSucceeded;
                     handler?.Invoke(this, Serializer.JsonToManyFruits(resString.Substring(1)));
                 }
+
+                waitingForSellResponse = false;
             }
             else if (message.Contains("PriceChanged"))
             {

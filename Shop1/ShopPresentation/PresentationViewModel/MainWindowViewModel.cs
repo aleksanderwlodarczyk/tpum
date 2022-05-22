@@ -20,7 +20,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
     {
 
-        private  IConnectionService _connectionService;
+        private IConnectionService _connectionService;
         #region public API
 
         public MainWindowViewModel() : this(ModelAbstractApi.CreateApi())
@@ -35,7 +35,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             MainViewVisibility = ModelLayer.MainViewVisibility;
             BasketViewVisibility = ModelLayer.BasketViewVisibility;
             fruits = new ObservableCollection<FruitPresentation>();
-            foreach(FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
                 Fruits.Add(fruit);
             }
@@ -294,15 +294,18 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             //this.Navigate(new Uri("BasketWindow.xaml", UriKind.Relative));
         }
 
-        private async void BuyButtonClickHandler()
+        private void BuyButtonClickHandler()
         {
-            Basket.Buy();
-            BasketSum = Basket.Sum();
-            Fruits.Clear();
-            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
+            Task.Run(async () =>
             {
-                Fruits.Add(fruit);
-            }
+                await Basket.Buy();
+                BasketSum = Basket.Sum();
+                Fruits.Clear();
+                foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
+                {
+                    Fruits.Add(fruit);
+                }
+            });
         }
 
         private void BasketButtonClickHandler()
@@ -326,7 +329,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                     Fruits.Add(fruit);
                 }
             }
-            
+
         }
 
         private void FruitButtonClickHandler(Guid id)
@@ -346,7 +349,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             Fruits.Clear();
             foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
-                if(fruit.FruitType.ToLower().Equals("apple"))
+                if (fruit.FruitType.ToLower().Equals("apple"))
                     Fruits.Add(fruit);
             }
         }

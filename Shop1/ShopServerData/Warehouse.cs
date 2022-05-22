@@ -25,6 +25,7 @@ namespace ShopServerData
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public List<IFruit> Stock { get; }
+        private readonly object dataLock = new object();
 
         public void RemoveFruits(List<IFruit> fruits)
         {
@@ -62,12 +63,14 @@ namespace ShopServerData
         public void ChangeFruitPrice(Guid id, float newPrice)
         {
             IFruit fruit = Stock.Find(x => x.ID.Equals(id));
-
             if (fruit == null)
                 return;
             if (Math.Abs(newPrice - fruit.Price) < 0.01f)
                 return;
-            fruit.Price = newPrice;
+            lock (dataLock)
+            {
+                fruit.Price = newPrice;
+            }
             OnPriceChanged(fruit.ID, fruit.Price);
         }
 

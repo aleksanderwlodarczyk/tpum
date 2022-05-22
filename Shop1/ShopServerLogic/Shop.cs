@@ -11,6 +11,7 @@ namespace ShopServerLogic
     {
         private IWarehouse warehouse;
         private IPromotionManager promotionManager;
+        private readonly object _dataLock = new object();
         public Shop(IWarehouse warehouse)
         {
             this.warehouse = warehouse;
@@ -20,43 +21,38 @@ namespace ShopServerLogic
 
         public bool Sell(List<IFruitDTO> fruitDTOs)
         {
-            List<Guid> guids = new List<Guid>();
-
-            foreach (IFruitDTO fruitDTO in fruitDTOs)
+            lock (_dataLock)
             {
-                guids.Add(fruitDTO.ID);
+                List<Guid> guids = new List<Guid>();
+
+                foreach (IFruitDTO fruitDTO in fruitDTOs)
+                {
+                    guids.Add(fruitDTO.ID);
+                }
+
+                List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
+                if (fruits.Count != fruitDTOs.Count) return false;
+
+                foreach (IFruitDTO fruitDTO in fruitDTOs)
+                {
+                    var warehouseFruit = fruits.First(x => x.ID == fruitDTO.ID);
+                    if (warehouseFruit.Price != fruitDTO.Price) return false;
+                }
+
+
+                warehouse.RemoveFruits(fruits);
+
+                return true;
             }
-
-            List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
-            if(fruits.Count != fruitDTOs.Count) return false;
-
-            foreach (IFruitDTO fruitDTO in fruitDTOs)
-            {
-                var warehouseFruit = fruits.First(x => x.ID == fruitDTO.ID);
-                if(warehouseFruit.Price != fruitDTO.Price) return false;
-            }
-
-
-            warehouse.RemoveFruits(fruits);
-
-            return true;
         }
 
-        public List<IFruitDTO> GetAvailableFruits(bool withPromotion = true)
+        public List<IFruitDTO> GetAvailableFruits()
         {
-            Tuple<Guid, float> promotion = new Tuple<Guid, float>(Guid.Empty, 1f);
-            if (withPromotion)
-            {
-                promotion = promotionManager.GetCurrentPromotion();
-            }
 
             List<IFruitDTO> result = new List<IFruitDTO>();
 
             foreach (IFruit fruit in warehouse.Stock)
             {
-                //float price = fruit.Price;
-                //if (fruit.ID.Equals(promotion.Item1))
-                //    price *= promotion.Item2;
                 result.Add(new FruitDTO { Price = fruit.Price, ID = fruit.ID, Name = fruit.Name, FruitType = (int)fruit.FruitType, Origin = (int)fruit.Origin });
             }
 
