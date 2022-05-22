@@ -46,7 +46,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
                 shoppingList.Add(fruit);
             }
 
-            await Shop.Sell(shoppingList);
+            Task.Run(async () => await Shop.Sell(shoppingList));
 
             Fruits.Clear();
         }

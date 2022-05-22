@@ -296,16 +296,13 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private void BuyButtonClickHandler()
         {
-            Task.Run(async () =>
+            Basket.Buy();
+            BasketSum = Basket.Sum();
+            Fruits.Clear();
+            foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
             {
-                await Basket.Buy();
-                BasketSum = Basket.Sum();
-                Fruits.Clear();
-                foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
-                {
-                    Fruits.Add(fruit);
-                }
-            });
+                Fruits.Add(fruit);
+            }
         }
 
         private void BasketButtonClickHandler()
@@ -387,6 +384,8 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         {
             BasketViewVisibility = "Hidden";
             MainViewVisibility = "Visible";
+
+            TransactionStatusText = "";
 
             ModelLayer.WarehousePresentation.SendMessageAsync("echo");
         }
