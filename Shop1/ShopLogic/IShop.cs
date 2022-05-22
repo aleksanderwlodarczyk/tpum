@@ -7,7 +7,7 @@ namespace ShopLogic
 {
     public interface IShop
     {
-        public Task<bool> Sell(List<IFruitDTO> fruits);
+        public Task Sell(List<IFruitDTO> fruits);
 
         public Task SendMessageAsync(string message);
 
@@ -15,5 +15,8 @@ namespace ShopLogic
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public event EventHandler<IFruitDTO> OnFruitChanged;
         public event EventHandler<IFruitDTO> OnFruitRemoved;
+
+        public event EventHandler TransactionFailed;
+        public event EventHandler<List<IFruitDTO>> TransactionSucceeded;
     }
 }

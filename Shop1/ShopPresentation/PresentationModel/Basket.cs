@@ -35,7 +35,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
             return res;
         }
 
-        public async Task<bool> Buy()
+        public async Task Buy()
         {
             List<IFruitDTO> shoppingList = new List<IFruitDTO>();
 
@@ -43,12 +43,10 @@ namespace TP.ConcurrentProgramming.PresentationModel
             {
                 shoppingList.Add(Shop.GetAvailableFruits().FirstOrDefault(x => x.ID == fruitPresentation.ID));
             }
-
-            bool res = await Shop.Sell(shoppingList);
+            
+            await Shop.Sell(shoppingList);
 
             Fruits.Clear();
-
-            return res;
         }
     }
 }

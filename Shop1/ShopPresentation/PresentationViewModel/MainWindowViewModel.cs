@@ -41,6 +41,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
             ModelLayer.WarehousePresentation.PriceChanged += OnPriceChanged;
             ModelLayer.WarehousePresentation.FruitChanged += OnFruitChanged;
+
+            ModelLayer.WarehousePresentation.TransactionFailed += OnTransactionFailed;
+            ModelLayer.WarehousePresentation.TransactionSucceeded += OnTransactionSucceeded;
+
             basket = ModelLayer.Basket;
             ButtomClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => ClickHandler());
             BasketButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BasketButtonClickHandler());
@@ -55,6 +59,16 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
             _connectionService = ServiceFactory.CreateConnectionService;
+        }
+
+        private void OnTransactionSucceeded(object? sender, List<FruitPresentation> e)
+        {
+            TransactionStatusText = "Zakup pomyślny";
+        }
+
+        private void OnTransactionFailed(object? sender, EventArgs e)
+        {
+            TransactionStatusText = "Nie udało się zakupić\nowoców";
         }
 
         private void OnFruitChanged(object? sender, FruitPresentation e)
@@ -267,8 +281,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private async void BuyButtonClickHandler()
         {
-            bool result = await Basket.Buy();
-            TransactionStatusText = result ? "Zakup pomyślny" : "Nie udało się zakupić\nowoców";
+            Basket.Buy();
             BasketSum = Basket.Sum();
             Fruits.Clear();
             foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())

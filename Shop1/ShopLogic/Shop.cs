@@ -15,10 +15,39 @@ namespace ShopLogic
         {
             this.warehouse = warehouse;
             warehouse.PriceChanged += OnPriceChanged;
+            warehouse.TransactionFailed += OnTransactionFailed;
+            warehouse.TransactionSucceeded += OnTransactionSucceeded;
             warehouse.Subscribe(this);
         }
 
-        public async Task<bool> Sell(List<IFruitDTO> fruitDTOs)
+        private void OnTransactionSucceeded(object? sender, List<IFruit> e)
+        {
+            warehouse.RemoveFruits(e);
+            EventHandler<List<IFruitDTO>> handler = TransactionSucceeded;
+            List<IFruitDTO> soldFruits = new List<IFruitDTO>();
+
+            foreach (IFruit fruit in e)
+            {
+                FruitDTO fruitDTO = new FruitDTO();
+                fruitDTO.FruitType = fruit.FruitType.ToString();
+                fruitDTO.ID = fruit.ID;
+                fruitDTO.Name = fruit.Name;
+                fruitDTO.Origin = fruit.Origin.ToString();
+                fruitDTO.Price = fruit.Price;
+
+                soldFruits.Add(fruitDTO);
+            }
+
+            handler?.Invoke(this, soldFruits);
+        }
+
+        private void OnTransactionFailed(object? sender, EventArgs e)
+        {
+            EventHandler handler = TransactionFailed;
+            handler?.Invoke(this, e);
+        }
+
+        public async Task Sell(List<IFruitDTO> fruitDTOs)
         {
             List<Guid> guids = new List<Guid>();
 
@@ -26,16 +55,10 @@ namespace ShopLogic
             {
                 guids.Add(fruitDTO.ID);
             }
-
-
-
+            
             List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
-            bool res = await warehouse.TryBuy(fruits);
-
-            if (res)
-                warehouse.RemoveFruits(fruits);
-
-            return res;
+            await warehouse.TryBuy(fruits);
+            
         }
 
         public async Task SendMessageAsync(string message)
@@ -67,6 +90,8 @@ namespace ShopLogic
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
         public event EventHandler<IFruitDTO> OnFruitChanged;
         public event EventHandler<IFruitDTO> OnFruitRemoved;
+        public event EventHandler TransactionFailed;
+        public event EventHandler<List<IFruitDTO>> TransactionSucceeded;
 
 
         private void OnPriceChanged(object sender, ShopData.PriceChangeEventArgs e)

@@ -34,6 +34,8 @@ namespace ShopData
         }
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler<List<IFruit>> TransactionSucceeded;
         public List<IFruit> Stock { get; private set; }
         private bool waitingForStockUpdate;
         private bool waitingForSellResponse;
@@ -143,7 +145,7 @@ namespace ShopData
             await WebSocketClient.CurrentConnection.SendAsync("RequestAll");
         }
 
-        public async Task<bool> TryBuy(List<IFruit> fruits)
+        public async Task TryBuy(List<IFruit> fruits)
         {
             waitingForSellResponse = true;
 
@@ -151,12 +153,6 @@ namespace ShopData
 
             await WebSocketClient.CurrentConnection.SendAsync("RequestTransaction" + json);
 
-            while (waitingForSellResponse)
-            {
-
-            }
-
-            return transactionSuccess;
         }
 
         private void ParseMessage(string message)
@@ -174,10 +170,19 @@ namespace ShopData
             else if (message.Contains("TransactionResult"))
             {
                 string resString = message.Substring("TransactionResult".Length);
-                transactionSuccess = bool.Parse(resString);
-                waitingForSellResponse = false;
+                transactionSuccess = resString[0] == '1';
+
                 if (!transactionSuccess)
+                {
+                    EventHandler handler = TransactionFailed;
+                    handler?.Invoke(this, EventArgs.Empty);
                     RequestFruitsUpdate();
+                }
+                else
+                {
+                    EventHandler<List<IFruit>> handler = TransactionSucceeded;
+                    handler?.Invoke(this, Serializer.JsonToManyFruits(resString.Substring(1)));
+                }
             }
         }
 

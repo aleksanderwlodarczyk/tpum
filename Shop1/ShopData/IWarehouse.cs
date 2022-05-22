@@ -6,7 +6,9 @@ namespace ShopData
 {
     public interface IWarehouse : IObservable<IFruit>
     {
-        public event EventHandler<PriceChangeEventArgs> PriceChanged; 
+        public event EventHandler<PriceChangeEventArgs> PriceChanged;
+        public event EventHandler TransactionFailed;
+        public event EventHandler<List<IFruit>> TransactionSucceeded;
         public List<IFruit> Stock { get; }
         public void RemoveFruits(List<IFruit> fruits);
         public void AddFruits(List<IFruit> fruits);
@@ -17,6 +19,6 @@ namespace ShopData
 
         public Task SendAsync(string message);
         public Task RequestFruitsUpdate();
-        Task<bool> TryBuy(List<IFruit> fruits);
+        Task TryBuy(List<IFruit> fruits);
     }
 }
