@@ -60,6 +60,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
             _connectionService = ServiceFactory.CreateConnectionService;
+            _connectionService.ConnectionLogger += s => Log = s;
         }
 
         private void OnFruitRemoved(object? sender, FruitPresentation e)
@@ -154,6 +155,18 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
                 RaisePropertyChanged("ConnectButtonText");
             }
         }
+
+        public string Log
+        {
+            get => _log;
+            set
+            {
+                _log = value;
+                RaisePropertyChanged("Log");
+            }
+        }
+
+        private string _log = "Waiting for connection logs...";
 
         public string MainViewVisibility
         {
@@ -315,16 +328,25 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private async Task ConnectButtonClickHandler()
         {
-            ConnectButtonText = "łączenie";
-            bool result = await _connectionService.Connect(new Uri("ws://localhost:8081"));
-            if (result)
+            if (!_connectionService.Connected)
             {
-                ConnectButtonText = "połączono";
-                Fruits.Clear();
-                foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
+                ConnectButtonText = "łączenie";
+                bool result = await _connectionService.Connect(new Uri("ws://localhost:8081"));
+                if (result)
                 {
-                    Fruits.Add(fruit);
+                    ConnectButtonText = "połączono";
+                    Fruits.Clear();
+                    foreach (FruitPresentation fruit in ModelLayer.WarehousePresentation.GetFruits())
+                    {
+                        Fruits.Add(fruit);
+                    }
                 }
+            }
+            else
+            {
+                await _connectionService.Disconnect();
+                ConnectButtonText = "rozłączono";
+                Fruits.Clear();
             }
 
         }

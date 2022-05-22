@@ -29,8 +29,10 @@ namespace ShopServerPresentation
             Console.WriteLine("[Server]: Client connected");
             WebSocketServer.CurrentConnection = webSocketConnection;
             webSocketConnection.onMessage = ParseMessage;
-            webSocketConnection.onClose = () => { Console.WriteLine("[Server]: Connection closed"); };
-            webSocketConnection.onError = () => { Console.WriteLine("[Server]: Connection error encountered"); };
+            webSocketConnection.onClose = () => { Console.WriteLine("[Server]: Connection closed");
+                WebSocketServer.CurrentConnection = null;
+            };
+            webSocketConnection.onError = () => { Console.WriteLine("[Server]: Connection error encountered"); WebSocketServer.CurrentConnection = null; };
         }
 
         static async void ParseMessage(string message)

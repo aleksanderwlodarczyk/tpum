@@ -22,9 +22,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock x:Name="PromotionLink" FontSize="28">
-                    <!--<Hyperlink>!!! PROMOCJA !!! 3 Jabłka w cenie 30</Hyperlink>-->
-                    </TextBlock>
+                    <!--<TextBlock Text="{Binding Log}"  FontSize="28"> </TextBlock>-->
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
