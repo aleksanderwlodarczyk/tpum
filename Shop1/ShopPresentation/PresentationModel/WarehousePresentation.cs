@@ -16,7 +16,15 @@ namespace TP.ConcurrentProgramming.PresentationModel
             Shop.PriceChanged += OnPriceChanged;
             Shop.OnFruitChanged += OnFruitChanged;
             Shop.TransactionFailed += OnTransactionFailed;
+            Shop.OnFruitRemoved += OnFruitRemoved;
             Shop.TransactionSucceeded += OnTransactionSucceeded;
+        }
+
+        private void OnFruitRemoved(object? sender, IFruitDTO e)
+        {
+            EventHandler<FruitPresentation> handler = FruitRemoved;
+            FruitPresentation fruit = new FruitPresentation(e.Name, e.Price, e.ID, e.Origin, e.FruitType);
+            handler?.Invoke(this, fruit);
         }
 
         private void OnTransactionSucceeded(object? sender, List<IFruitDTO> e)
@@ -70,6 +78,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public event EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> PriceChanged;
         public event EventHandler<FruitPresentation> FruitChanged;
+        public event EventHandler<FruitPresentation> FruitRemoved;
         public event EventHandler<List<FruitPresentation>> TransactionSucceeded;
         public event EventHandler TransactionFailed;
     }

@@ -41,6 +41,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
             ModelLayer.WarehousePresentation.PriceChanged += OnPriceChanged;
             ModelLayer.WarehousePresentation.FruitChanged += OnFruitChanged;
+            ModelLayer.WarehousePresentation.FruitRemoved += OnFruitRemoved;
 
             ModelLayer.WarehousePresentation.TransactionFailed += OnTransactionFailed;
             ModelLayer.WarehousePresentation.TransactionSucceeded += OnTransactionSucceeded;
@@ -59,6 +60,20 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
             _connectionService = ServiceFactory.CreateConnectionService;
+        }
+
+        private void OnFruitRemoved(object? sender, FruitPresentation e)
+        {
+            ObservableCollection<FruitPresentation> newFruits = new ObservableCollection<FruitPresentation>(Fruits);
+            FruitPresentation fruit = newFruits.FirstOrDefault(x => x.ID == e.ID);
+
+            if (fruit != null)
+            {
+                int fruitIndex = newFruits.IndexOf(fruit);
+                newFruits.RemoveAt(fruitIndex);
+            }
+
+            Fruits = new ObservableCollection<FruitPresentation>(newFruits);
         }
 
         private void OnTransactionSucceeded(object? sender, List<FruitPresentation> e)
