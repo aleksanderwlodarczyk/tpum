@@ -9,6 +9,7 @@ namespace TP.ConcurrentProgramming.PresentationModel
     internal class WarehousePresentation : IWarehousePresentation
     {
         private IShop Shop { get; set; }
+        private IConnectionService _connectionService;
 
         public WarehousePresentation(IShop shop)
         {
@@ -18,6 +19,13 @@ namespace TP.ConcurrentProgramming.PresentationModel
             Shop.TransactionFailed += OnTransactionFailed;
             Shop.OnFruitRemoved += OnFruitRemoved;
             Shop.TransactionSucceeded += OnTransactionSucceeded;
+            _connectionService = ServiceFactory.CreateConnectionService;
+            _connectionService.ConnectionLogger += ConnectionLogger;
+        }
+
+        private void ConnectionLogger(string obj)
+        {
+            Console.WriteLine(obj);
         }
 
         private void OnFruitRemoved(object? sender, IFruitDTO e)
@@ -74,6 +82,21 @@ namespace TP.ConcurrentProgramming.PresentationModel
                 fruits.Add(new FruitPresentation(fruit.Name, fruit.Price, fruit.ID, fruit.Origin, fruit.FruitType));
             }
             return fruits;
+        }
+
+        public Task<bool> Connect(Uri uri)
+        {
+            return _connectionService.Connect(uri);
+        }
+
+        public async Task Disconnect()
+        {
+            await _connectionService.Disconnect();
+        }
+
+        public bool IsConnected()
+        {
+            return _connectionService.Connected;
         }
 
         public event EventHandler<TP.ConcurrentProgramming.PresentationModel.PriceChangeEventArgs> PriceChanged;

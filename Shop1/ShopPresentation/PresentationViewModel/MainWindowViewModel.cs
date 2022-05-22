@@ -19,7 +19,6 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
     {
 
-        private IConnectionService _connectionService;
         #region public API
 
         public MainWindowViewModel() : this(ModelAbstractApi.CreateApi())
@@ -58,8 +57,6 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             BuyButtonClick = new GalaSoft.MvvmLight.Command.RelayCommand(() => BuyButtonClickHandler());
 
             FruitButtonClick = new RelayCommand<Guid>((id) => FruitButtonClickHandler(id));
-            _connectionService = ServiceFactory.CreateConnectionService;
-            _connectionService.ConnectionLogger += s => Log = s;
         }
 
         private void OnFruitRemoved(object? sender, FruitPresentation e)
@@ -327,10 +324,10 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
 
         private async Task ConnectButtonClickHandler()
         {
-            if (!_connectionService.Connected)
+            if (!ModelLayer.WarehousePresentation.IsConnected())
             {
                 ConnectButtonText = "łączenie";
-                bool result = await _connectionService.Connect(new Uri("ws://localhost:8081"));
+                bool result = await ModelLayer.WarehousePresentation.Connect(new Uri("ws://localhost:8081"));
                 if (result)
                 {
                     ConnectButtonText = "połączono";
@@ -343,7 +340,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
             else
             {
-                await _connectionService.Disconnect();
+                await ModelLayer.WarehousePresentation.Disconnect();
                 ConnectButtonText = "rozłączono";
                 Fruits.Clear();
             }
