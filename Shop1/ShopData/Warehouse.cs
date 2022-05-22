@@ -60,13 +60,18 @@ namespace ShopData
 
         public void AddFruit(IFruit fruit)
         {
+            IFruit oldFruit = Stock.Find(x => x.ID == fruit.ID);
+            if (oldFruit == null)
+                Stock.Add(fruit);
+            else
+            {
+                Stock.Remove(oldFruit);
+                Stock.Add(fruit);
+            }
             foreach (var observer in observers)
             {
                 observer.OnNext(fruit);
             }
-            if (Stock.Find(x => x.ID == fruit.ID) != null)
-                return;
-            Stock.Add(fruit);
         }
 
         public void RemoveFruit(IFruit fruit)
