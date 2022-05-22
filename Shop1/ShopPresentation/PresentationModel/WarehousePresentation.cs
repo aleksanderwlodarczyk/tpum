@@ -6,7 +6,7 @@ using ShopLogic;
 
 namespace TP.ConcurrentProgramming.PresentationModel
 {
-    public class WarehousePresentation
+    internal class WarehousePresentation : IWarehousePresentation
     {
         private IShop Shop { get; set; }
 

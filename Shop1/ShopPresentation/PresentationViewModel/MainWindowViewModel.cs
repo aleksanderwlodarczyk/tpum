@@ -12,7 +12,6 @@ using ShopLogic;
 using Microsoft.Toolkit.Mvvm;
 using GalaSoft.MvvmLight.Command;
 using System.Timers;
-using ShopData;
 
 namespace TP.ConcurrentProgramming.PresentationViewModel
 {
@@ -228,7 +227,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
             }
         }
 
-        public Basket Basket
+        public IBasket Basket
         {
             get
             {
@@ -417,7 +416,7 @@ namespace TP.ConcurrentProgramming.PresentationViewModel
         #region private
 
         private IList<object> b_CirclesCollection;
-        private Basket basket;
+        private IBasket basket;
         private float basketSum;
         private string transactionStatusText;
         private ObservableCollection<FruitPresentation> fruits;

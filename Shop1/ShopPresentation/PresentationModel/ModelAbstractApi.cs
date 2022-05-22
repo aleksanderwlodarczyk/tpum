@@ -11,8 +11,8 @@ namespace TP.ConcurrentProgramming.PresentationModel
         public abstract string ColorString { get; }
         public abstract string MainViewVisibility { get; }
         public abstract string BasketViewVisibility { get; } 
-        public abstract WarehousePresentation WarehousePresentation { get; }
-        public abstract Basket Basket { get; }
+        public abstract IWarehousePresentation WarehousePresentation { get; }
+        public abstract IBasket Basket { get; }
 
         public static ModelAbstractApi CreateApi(ILogicLayer logicLayer = default(ILogicLayer))
         {
@@ -35,10 +35,11 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
         public override string BasketViewVisibility => "Hidden";
 
-        public override Basket Basket => new Basket(new ObservableCollection<FruitPresentation>(), logicLayer.Shop);
+        public override IBasket Basket => new Basket(new ObservableCollection<FruitPresentation>(), logicLayer.Shop);
 
-        public override WarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
+        public override IWarehousePresentation WarehousePresentation => new WarehousePresentation(logicLayer.Shop);
 
         private ILogicLayer logicLayer;
+
     }
 }

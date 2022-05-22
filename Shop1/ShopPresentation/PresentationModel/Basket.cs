@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TP.ConcurrentProgramming.PresentationModel
 {
-    public class Basket
+    internal class Basket : IBasket
     {
         public ObservableCollection<FruitPresentation> Fruits { get; set; }
         private IShop Shop { get; set; }
