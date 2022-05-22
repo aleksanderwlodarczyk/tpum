@@ -41,9 +41,11 @@ namespace TP.ConcurrentProgramming.PresentationModel
 
             foreach (FruitPresentation fruitPresentation in Fruits)
             {
-                shoppingList.Add(Shop.GetAvailableFruits().FirstOrDefault(x => x.ID == fruitPresentation.ID));
+                IFruitDTO fruit = Shop.GetAvailableFruits().FirstOrDefault(x => x.ID == fruitPresentation.ID);
+                fruit.Price = fruitPresentation.Price;
+                shoppingList.Add(fruit);
             }
-            
+
             await Shop.Sell(shoppingList);
 
             Fruits.Clear();

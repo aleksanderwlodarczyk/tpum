@@ -55,10 +55,19 @@ namespace ShopLogic
             {
                 guids.Add(fruitDTO.ID);
             }
-            
+
             List<IFruit> fruits = warehouse.GetFruitsWithIDs(guids);
+
+            foreach (FruitDTO fruitDTO in fruitDTOs)
+            {
+                IFruit fr = fruits.Find(x => x.ID == fruitDTO.ID);
+                if (fr != null)
+                    fr.Price = fruitDTO.Price;
+            }
+
+
             await warehouse.TryBuy(fruits);
-            
+
         }
 
         public async Task SendMessageAsync(string message)

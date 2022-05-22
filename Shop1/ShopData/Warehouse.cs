@@ -71,18 +71,19 @@ namespace ShopData
 
         public void RemoveFruit(IFruit fruit)
         {
-            if (Stock.Find(x => x.ID == fruit.ID) == null)
+            IFruit fruitToRemove = Stock.Find(x => x.ID == fruit.ID);
+            if (fruitToRemove == null)
                 return;
-            Stock.Remove(fruit);
+            Stock.Remove(fruitToRemove);
 
-            fruit.Price = -1f;
-            fruit.FruitType = FruitType.Deleted;
-            fruit.Name = "";
-            fruit.Origin = CountryOfOrigin.Deleted;
+            fruitToRemove.Price = -1f;
+            fruitToRemove.FruitType = FruitType.Deleted;
+            fruitToRemove.Name = "";
+            fruitToRemove.Origin = CountryOfOrigin.Deleted;
 
             foreach (var observer in observers)
             {
-                observer.OnNext(fruit);
+                observer.OnNext(fruitToRemove);
             }
         }
 
