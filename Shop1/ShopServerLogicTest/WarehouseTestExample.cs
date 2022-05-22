@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ShopData;
+using ShopServerData;
 
-namespace ShopLogicTest
+namespace ShopServerLogicTest
 {
     internal class WarehouseTestExample : IWarehouse
     {
@@ -13,8 +13,6 @@ namespace ShopLogicTest
         }
 
         public event EventHandler<PriceChangeEventArgs> PriceChanged;
-        public event EventHandler TransactionFailed;
-        public event EventHandler<List<IFruit>> TransactionSucceeded;
         public List<IFruit> Stock { get; }
 
         public void RemoveFruits(List<IFruit> fruits)
@@ -62,31 +60,10 @@ namespace ShopLogicTest
             OnPriceChanged(fruit.ID, fruit.Price);
         }
 
-        public async Task SendAsync(string message)
-        {
-
-        }
-
-        public async Task RequestFruitsUpdate()
-        {
-
-        }
-
-        public async Task TryBuy(List<IFruit> fruits)
-        {
-            RemoveFruits(fruits);
-        }
-
         private void OnPriceChanged(Guid id, float price)
         {
             EventHandler<PriceChangeEventArgs> handler = PriceChanged;
             handler?.Invoke(this, new PriceChangeEventArgs(id, price));
-        }
-
-
-        public IDisposable Subscribe(IObserver<IFruit> observer)
-        {
-            return null;
         }
     }
 }

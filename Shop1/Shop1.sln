@@ -17,11 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopDataTest", "ShopDataTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopLogicTest", "ShopLogicTest\ShopLogicTest.csproj", "{2CC2C4FC-2945-4B7D-82CA-FB9A33B007B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerPresentation", "ShopServerPresentation\ShopServerPresentation.csproj", "{80E9C6FF-F566-4555-9386-4A9E8C8187D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerPresentation", "ShopServerPresentation\ShopServerPresentation.csproj", "{80E9C6FF-F566-4555-9386-4A9E8C8187D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerLogic", "ShopServerLogic\ShopServerLogic.csproj", "{6C986373-525B-4191-884E-7DA67B40D1A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerLogic", "ShopServerLogic\ShopServerLogic.csproj", "{6C986373-525B-4191-884E-7DA67B40D1A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerData", "ShopServerData\ShopServerData.csproj", "{47922A0C-F9F8-4518-8C3A-727C6D5D2F5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerData", "ShopServerData\ShopServerData.csproj", "{47922A0C-F9F8-4518-8C3A-727C6D5D2F5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerDataTest", "ShopServerDataTest\ShopServerDataTest.csproj", "{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerLogicTest", "ShopServerLogicTest\ShopServerLogicTest.csproj", "{1527FBB0-EEED-4E2B-888A-40B134D9B96B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{47922A0C-F9F8-4518-8C3A-727C6D5D2F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47922A0C-F9F8-4518-8C3A-727C6D5D2F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47922A0C-F9F8-4518-8C3A-727C6D5D2F5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
