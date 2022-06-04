@@ -1,0 +1,6 @@
+IFruit,3,ObjectType
+IFruit_Id,4,Variable
+IFruit_Name,5,Variable
+IFruit_Price,6,Variable
+IFruit_Origin,7,Variable
+IFruit_FruitType,8,Variable

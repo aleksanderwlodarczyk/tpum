@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="OPCUAModelDesign.xslt"?>
+<ModelDesign xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" TargetNamespace="http://cas.eu/UA/CommServer/" xmlns="http://opcfoundation.org/UA/ModelDesign.xsd">
+  <Namespaces>
+    <Namespace Name="cas" XmlPrefix="cas">http://cas.eu/UA/CommServer/</Namespace>
+    <Namespace Name="OpcUa" Prefix="Opc.Ua" XmlNamespace="http://opcfoundation.org/UA/2008/02/Types.xsd">http://opcfoundation.org/UA/</Namespace>
+    <Namespace Name="DataLayer" Prefix="DataLayer" XmlPrefix="DataLayer">http://group13.com/TPUM/Shop1/</Namespace>
+  </Namespaces>
+  <ObjectType xmlns:q1="http://group13.com/TPUM/Shop1/" SymbolicName="q1:IFruit" IsAbstract="true">
+    <BrowseName>IFruit</BrowseName>
+    <Children>
+      <Property SymbolicName="q1:Id" xmlns:q2="http://opcfoundation.org/UA/" DataType="q2:Guid">
+        <BrowseName>Id</BrowseName>
+      </Property>
+      <Property SymbolicName="q1:Name" xmlns:q3="http://opcfoundation.org/UA/" DataType="q3:String">
+        <BrowseName>Name</BrowseName>
+      </Property>
+      <Property SymbolicName="q1:Price" xmlns:q4="http://opcfoundation.org/UA/" DataType="q4:Float">
+        <BrowseName>Price</BrowseName>
+      </Property>
+      <Property SymbolicName="q1:Origin" xmlns:q5="http://opcfoundation.org/UA/" DataType="q5:Integer">
+        <BrowseName>Origin</BrowseName>
+      </Property>
+      <Property SymbolicName="q1:FruitType" xmlns:q6="http://opcfoundation.org/UA/" DataType="q6:Integer">
+        <BrowseName>FruitType</BrowseName>
+      </Property>
+    </Children>
+  </ObjectType>
+</ModelDesign>

@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerLogic", "ShopServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerData", "ShopServerData\ShopServerData.csproj", "{47922A0C-F9F8-4518-8C3A-727C6D5D2F5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerDataTest", "ShopServerDataTest\ShopServerDataTest.csproj", "{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerDataTest", "ShopServerDataTest\ShopServerDataTest.csproj", "{A38457BB-E734-4DD6-9BB1-EAB0555C81C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopServerLogicTest", "ShopServerLogicTest\ShopServerLogicTest.csproj", "{1527FBB0-EEED-4E2B-888A-40B134D9B96B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerLogicTest", "ShopServerLogicTest\ShopServerLogicTest.csproj", "{1527FBB0-EEED-4E2B-888A-40B134D9B96B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OPCModel", "OPCModel\OPCModel.csproj", "{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1527FBB0-EEED-4E2B-888A-40B134D9B96B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
