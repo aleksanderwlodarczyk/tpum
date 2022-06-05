@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopServerLogicTest", "Shop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OPCModel", "OPCModel\OPCModel.csproj", "{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "IntegrationTest\IntegrationTest.csproj", "{8B8C99DA-2A10-4CBB-A973-5F258F7C3651}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA0CA86F-6A3D-4FE0-B5A0-98EC92B0FC86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B8C99DA-2A10-4CBB-A973-5F258F7C3651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B8C99DA-2A10-4CBB-A973-5F258F7C3651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B8C99DA-2A10-4CBB-A973-5F258F7C3651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B8C99DA-2A10-4CBB-A973-5F258F7C3651}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
