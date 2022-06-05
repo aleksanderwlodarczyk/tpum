@@ -33,7 +33,6 @@ using System.Text;
 using System.Xml;
 using System.Runtime.Serialization;
 using Opc.Ua;
-using DataLayer;
 
 namespace DataLayer
 {
@@ -144,9 +143,9 @@ namespace DataLayer
     public static partial class BrowseNames
     {
         /// <summary>
-        /// The BrowseName for the Fruit component.
+        /// The BrowseName for the FruitType component.
         /// </summary>
-        public const string Fruit = "Fruit";
+        public const string FruitType = "FruitType";
 
         /// <summary>
         /// The BrowseName for the Id component.
@@ -154,14 +153,14 @@ namespace DataLayer
         public const string Id = "Id";
 
         /// <summary>
-        /// The BrowseName for the Price component.
+        /// The BrowseName for the IFruit component.
         /// </summary>
-        public const string Price = "Price";
+        public const string IFruit = "IFruit";
 
         /// <summary>
-        /// The BrowseName for the FruitType component.
+        /// The BrowseName for the Name component.
         /// </summary>
-        public const string FruitType = "FruitType";
+        public const string Name = "Name";
 
         /// <summary>
         /// The BrowseName for the Origin component.
@@ -169,9 +168,9 @@ namespace DataLayer
         public const string Origin = "Origin";
 
         /// <summary>
-        /// The BrowseName for the Name component.
+        /// The BrowseName for the Price component.
         /// </summary>
-        public const string Name = "Name";
+        public const string Price = "Price";
     }
     #endregion
 

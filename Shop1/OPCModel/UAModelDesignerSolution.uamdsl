@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="UAModelDesignerSolution.xslt"?>
 <UAModelDesignerSolution xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Name>Solution10</Name>
+  <Name>TPUM_OPC</Name>
   <Projects>
-    <UAModelDesignerProject ProjectIdentifier="6cccf2a6-a889-41c1-9be5-67ec5cf990c9">
-      <Name>Model_0</Name>
-      <CSVFileName>$(ProjectFileName).csv</CSVFileName>
+    <UAModelDesignerProject ProjectIdentifier="8eecba6d-dbc9-4c2f-83c8-36ee89f96874">
+      <Name>OpcModel</Name>
+      <CSVFileName>Model_1.csv</CSVFileName>
       <BuildOutputDirectoryName>$(ProjectFileName)</BuildOutputDirectoryName>
-      <FileName>Model_0.xml</FileName>
+      <FileName>Model_1.xml</FileName>
     </UAModelDesignerProject>
   </Projects>
   <ServerDetails codebase="" configuration="" />

@@ -1,12 +1,12 @@
 <xs:schema
-  xmlns:DataLayer="http://group13.com/TPUM/Shop1/"
+  xmlns:cas="http://cas.eu/UA/CommServer/"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:ua="http://opcfoundation.org/UA/2008/02/Types.xsd"
-  xmlns:tns="http://cas.eu/UA/CommServer/"
-  targetNamespace="http://cas.eu/UA/CommServer/"
+  xmlns:tns="http://group13.com/TPUM/Shop1/"
+  targetNamespace="http://group13.com/TPUM/Shop1/"
   elementFormDefault="qualified"
 >
+  <xs:import namespace="http://cas.eu/UA/CommServer/" />
   <xs:import namespace="http://opcfoundation.org/UA/2008/02/Types.xsd" />
-  <xs:import namespace="http://group13.com/TPUM/Shop1/" />
 
 </xs:schema>

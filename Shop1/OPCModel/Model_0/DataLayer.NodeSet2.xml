@@ -4,7 +4,7 @@
     <Uri>http://group13.com/TPUM/Shop1/</Uri>
   </NamespaceUris>
   <Models>
-    <Model ModelUri="http://cas.eu/UA/CommServer/">
+    <Model ModelUri="http://group13.com/TPUM/Shop1/">
       <RequiredModel ModelUri="http://opcfoundation.org/UA/" Version="1.04" PublicationDate="2016-12-31T00:00:00Z" />
     </Model>
   </Models>

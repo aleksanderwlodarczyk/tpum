@@ -1,0 +1,14 @@
+<opc:TypeDictionary
+  xmlns:cas="http://cas.eu/UA/CommServer/"
+  xmlns:opc="http://opcfoundation.org/BinarySchema/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ua="http://opcfoundation.org/UA/"
+  xmlns:tns="http://group13.com/TPUM/Shop1/"
+  DefaultByteOrder="LittleEndian"
+  TargetNamespace="http://group13.com/TPUM/Shop1/"
+>
+  <!-- This File was generated on 2022-06-05 and supports the specifications supported by version 1.11.335.10 of the OPC UA deliverables. -->
+  <opc:Import Namespace="http://cas.eu/UA/CommServer/" Location=".BinarySchema.bsd"/>
+  <opc:Import Namespace="http://opcfoundation.org/UA/" Location="Opc.Ua.BinarySchema.bsd"/>
+
+</opc:TypeDictionary>
