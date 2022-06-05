@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using ShopServerLogic;
 
+    [assembly: InternalsVisibleTo("IntegrationTest")]
 namespace ShopServerPresentation
 {
     internal class Program
@@ -13,15 +15,16 @@ namespace ShopServerPresentation
 
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Server started");
-            logicLayer = ILogicLayer.Create();
-            shop = logicLayer.Shop;
-            shop.PriceChanged += async (sender, eventArgs) =>
-            {
-                if (WebSocketServer.CurrentConnection != null)
-                    await SendMessageAsync("PriceChanged" + eventArgs.Price.ToString() + "/" + eventArgs.Id.ToString());
-            };
-            await WebSocketServer.Server(8081, ConnectionHandler);
+            //Console.WriteLine("Server started");
+            //logicLayer = ILogicLayer.Create();
+            //shop = logicLayer.Shop;
+            //shop.PriceChanged += async (sender, eventArgs) =>
+            //{
+            //    if (WebSocketServer.CurrentConnection != null)
+            //        await SendMessageAsync("PriceChanged" + eventArgs.Price.ToString() + "/" + eventArgs.Id.ToString());
+            //};
+            //await WebSocketServer.Server(8081, ConnectionHandler);
+            await CreateServer();
         }
 
         static void ConnectionHandler(WebSocketConnection webSocketConnection)
@@ -81,6 +84,19 @@ namespace ShopServerPresentation
         {
             Console.WriteLine($"[Server]: {message}");
             await WebSocketServer.CurrentConnection.SendAsync(message);
+        }
+
+        public static async Task CreateServer()
+        {
+            Console.WriteLine("Server started");
+            logicLayer = ILogicLayer.Create();
+            shop = logicLayer.Shop;
+            shop.PriceChanged += async (sender, eventArgs) =>
+            {
+                if (WebSocketServer.CurrentConnection != null)
+                    await SendMessageAsync("PriceChanged" + eventArgs.Price.ToString() + "/" + eventArgs.Id.ToString());
+            };
+            await WebSocketServer.Server(8081, ConnectionHandler);
         }
     }
 }

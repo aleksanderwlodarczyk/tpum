@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ShopData;
+using ShopLogic;
 using ShopServerPresentation;
-using WebSocketConnection = ShopServerPresentation.WebSocketConnection;
+using WebSocketConnection = ShopData.WebSocketConnection;
+
+//using WebSocketConnection = ShopServerPresentation.WebSocketConnection;
 
 namespace IntegrationTest
 {
@@ -12,9 +16,30 @@ namespace IntegrationTest
     public class ClientServerTest
     {
         [TestMethod]
+        public async Task ConnectionService()
+        {
+            List<string> logs = new List<string>();
+            IConnectionService connService = ServiceFactory.CreateConnectionService;
+
+            connService.ConnectionLogger += s => { logs.Add(s); };
+
+            var task = Task.Run( async () => ShopServerPresentation.Program.CreateServer());
+
+            await connService.Connect(new Uri("ws://localhost:8081/"));
+
+
+            Assert.IsTrue(connService.Connected);
+            await connService.Disconnect();
+            await Task.Delay(10);
+            
+            task.Dispose();
+            Assert.IsFalse(connService.Connected);
+        }
+
+        [TestMethod]
         public async Task WebSocketUsageTestMethod()
         {
-            WebSocketConnection _wserver = null;
+            ShopServerPresentation.WebSocketConnection _wserver = null;
             ShopData.WebSocketConnection _wclient = null;
             const int _delay = 10;
 
@@ -24,35 +49,49 @@ namespace IntegrationTest
             Task server = Task.Run(async () => await WebSocketServer.Server(uri.Port,
                 _ws =>
                 {
-                    _wserver = _ws; _wserver.onMessage = (data) =>
+                    _wserver = _ws;
+                    Console.WriteLine("Connected with");
+                    Console.WriteLine(_ws);
+                    Console.WriteLine(_wserver);
+                    Console.WriteLine(_wserver is null);
+                    _wserver.onMessage = (data) =>
                     {
                         logOutput.Add($"Received message from client: { data}");
                     };
                 }));
-            await Task.Delay(_delay); //To make sure that the server is listening for messages
-                                      //connect client
+
+            await Task.Delay(_delay);
+
             _wclient = await WebSocketClient.Connect(uri, message => logOutput.Add(message));
+            Console.WriteLine(_wserver);
+            Console.WriteLine(_wserver is null);
+
+            Assert.IsNotNull(_wclient);
+            Assert.IsTrue(_wclient.IsConnected);
+
+            Console.WriteLine(_wserver);
+            Console.WriteLine(_wserver is null);
+            Console.WriteLine(_wclient is null);
 
             Assert.IsNotNull(_wserver);
-            Assert.IsNotNull(_wclient);
 
-            //send testing data from client to the server (use serialization if possible)
+
             Task clientSendTask = _wclient.SendAsync("test");
-            Assert.IsTrue(clientSendTask.Wait(new TimeSpan(0, 0, 1))); //To make sure that the send operation has been finished successfully
-            await Task.Delay(_delay); //To make sure that the message has been received by the server
+            Assert.IsTrue(clientSendTask.Wait(new TimeSpan(0, 0, 1)));
+            await Task.Delay(_delay);
 
-            //test correctness of the data
-            Assert.AreEqual($"Received message from client: test", logOutput[1]);
 
-            //respond from the server
+            Assert.AreEqual($"Received message from client: test", logOutput[0]);
+
+
             _wclient.onMessage = (data) =>
             {
                 logOutput.Add($"Received message from server: { data}");
             };
             Task serverSendTask = _wserver.SendAsync("test 2");
-            Assert.IsTrue(serverSendTask.Wait(new TimeSpan(0, 0, 1))); //To make sure that the send operation has been finished successfully
-            await Task.Delay(_delay); //To make sure that the message has been received by the server
-            Assert.AreEqual($"Received message from server: test 2", logOutput[2]); //test correctness of the response
+            Assert.IsTrue(serverSendTask.Wait(new TimeSpan(0, 0, 1)));
+            await Task.Delay(_delay);
+            Assert.AreEqual($"Received message from server: test 2", logOutput[1]);
             await _wclient?.DisconnectAsync();
             await _wserver?.DisconnectAsync();
         }

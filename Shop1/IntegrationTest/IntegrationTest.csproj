@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ShopData\ShopData.csproj" />
+    <ProjectReference Include="..\ShopLogic\ShopLogic.csproj" />
     <ProjectReference Include="..\ShopServerPresentation\ShopServerPresentation.csproj" />
   </ItemGroup>
 
