@@ -35,7 +35,7 @@ using System.Runtime.Serialization;
 using Opc.Ua;
 using DataLayer;
 
-namespace 
+namespace DataLayer
 {
     #region ObjectType Identifiers
     /// <summary>
@@ -143,6 +143,35 @@ namespace
     /// </summary>
     public static partial class BrowseNames
     {
+        /// <summary>
+        /// The BrowseName for the Fruit component.
+        /// </summary>
+        public const string Fruit = "Fruit";
+
+        /// <summary>
+        /// The BrowseName for the Id component.
+        /// </summary>
+        public const string Id = "Id";
+
+        /// <summary>
+        /// The BrowseName for the Price component.
+        /// </summary>
+        public const string Price = "Price";
+
+        /// <summary>
+        /// The BrowseName for the FruitType component.
+        /// </summary>
+        public const string FruitType = "FruitType";
+
+        /// <summary>
+        /// The BrowseName for the Origin component.
+        /// </summary>
+        public const string Origin = "Origin";
+
+        /// <summary>
+        /// The BrowseName for the Name component.
+        /// </summary>
+        public const string Name = "Name";
     }
     #endregion
 
